@@ -40,6 +40,7 @@ namespace AppMensajeria.Views
                     UsuarioService service = new UsuarioService();
                     service.CrearUsuario(usuario);
                     await DisplayAlert("Exito", "Su perfil ha sido almacenado.", "Aceptar");
+                    UserID.Text = "x";
                     EntryNombre.IsEnabled = false;
                     EntryTelefono.IsEnabled = false;
                     EntryEdad.IsEnabled = false;

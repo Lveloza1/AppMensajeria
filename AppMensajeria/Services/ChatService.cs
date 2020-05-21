@@ -17,7 +17,7 @@ namespace AppMensajeria.Services
         {
             return _context.Chats.ToObservableCollection();
         }
-        public void CrearArtista(Chat chat)
+        public void CrearChat(Chat chat)
         {
             try
             {

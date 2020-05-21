@@ -4,12 +4,36 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="AppMensajeria.Views.ChatGrupoPage">
+             x:Class="AppMensajeria.Views.ChatGrupoPage"
+             Title="Chats en Grupo">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <StackLayout.Padding>
+                <OnPlatform
+                    x:TypeArguments="Thickness"
+                    Android="20"
+                    iOS="50" />
+            </StackLayout.Padding>
+            <Label Text="Nombre del grupo" />
+            <Entry x:Name="EntryNombreGrupo"
+                   Placeholder="Nombre del grupo" />
+            <Button x:Name="CrearGrupo"
+                    Text="Crear Nuevo"
+                    Clicked="ButtonCrearGrupo_Clicked"/>
+            <Label Text="Añadir a grupo" />
+            <Picker x:Name="PickerUsuario"
+                    Title="Seleccione un usuario"
+                    ItemsSource="{Binding Usuarios}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                    SelectedItem="{Binding UsuarioSeleccionado}"/>
+            <Picker x:Name="PickerGrupo"
+                    Title="Seleccione un grupo"
+                    ItemsSource="{Binding Grupos}"
+                    ItemDisplayBinding="{Binding Titulo}"
+                    SelectedItem="{Binding ChatSeleccionado}"/>
+            <Button x:Name="Crear"
+                    Text="Crear Nuevo"
+                    Clicked="ButtonCrearGrupo_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -8,7 +8,7 @@ namespace AppMensajeria.Models
     {
         [Key]
         [Column("UsuarioID")]
-        public int ArtistaID { get; set; }
+        public int UsuarioID { get; set; }
         [Required]
         [StringLength(255)]
         [Column("Nombre")]

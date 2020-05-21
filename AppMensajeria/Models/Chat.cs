@@ -9,11 +9,14 @@ namespace AppMensajeria.Models
         [Key]
         [Column("ChatID")]
         public int ChatID { get; set; }
+        [Column("UsuarioID")]
+        public int UsuarioID { get; set; }
+        public Usuario Usuario { get; set; }
         [Required]
         [Column("Titulo")]
         public string Titulo { get; set; }
         [Required]
-        [Column("Titulo")]
+        [Column("Tipo")]
         public string Tipo { get; set; }
     }
 }

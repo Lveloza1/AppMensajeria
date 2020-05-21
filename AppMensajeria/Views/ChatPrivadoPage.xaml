@@ -4,12 +4,26 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="AppMensajeria.Views.ChatPrivadoPage">
+             x:Class="AppMensajeria.Views.ChatPrivadoPage"
+             Title="Chats Privados">
+
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <StackLayout.Padding>
+                <OnPlatform
+                    x:TypeArguments="Thickness"
+                    Android="20"
+                    iOS="50" />
+            </StackLayout.Padding>
+            <Label Text="Elegir usuario" />
+            <Picker x:Name="PickerUsuario"
+                    Title="Seleccione un usuario"
+                    ItemsSource="{Binding Usuarios}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                    SelectedItem="{Binding UsuarioSeleccionado}"/>
+            <Button x:Name="CrearPrivado"
+                    Text="Crear Nuevo"
+                    Clicked="ButtonCrearPrivado_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
