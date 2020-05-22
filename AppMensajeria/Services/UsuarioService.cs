@@ -2,6 +2,7 @@
 using AppMensajeria.Models;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace AppMensajeria.Services
 {
@@ -28,6 +29,13 @@ namespace AppMensajeria.Services
             {
                 throw;
             }
+        }
+        public Usuario ObtenerUsusarioPorTelefono(string telefono)
+        {
+            ObservableCollection<Usuario> usuarios = ObtenerUsuarios();
+            Usuario usuario = _context.Usuarios.Where(e => e.Telefono == telefono).FirstOrDefault();
+            return usuario;
+
         }
 
     }

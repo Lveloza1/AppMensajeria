@@ -14,8 +14,18 @@
                     Android="20"
                     iOS="50" />
             </StackLayout.Padding>
-            <Label Text="Mi ID" />
-            <Label x:Name="UserID" Text="{Binding UserID}" TextColor="Green"/>
+            <StackLayout x:Name="formBuscarUsuario">
+                <Label Text="Buscar mi usuaio" />
+                <Entry x:Name="EntryBuscarTelefono"
+                   Placeholder="Ingrese su numero de telefono" />
+                <Button x:Name="ButtonBuscarUsuario"
+                    Text="Buscar"
+                    Clicked="ButtonBuscarUsuario_Clicked"/>
+            </StackLayout>
+            <Image x:Name="ImageView" Source="no_image.jpeg" HeightRequest="300" WidthRequest="400" />
+            <Button x:Name="btnSelectPic"
+                    Text="Select picture"
+                    Clicked="btnSelectPic_Clicked"/>
             <Label Text="Nombre" />
             <Entry x:Name="EntryNombre"
                    Placeholder="Nombre" />
@@ -25,7 +35,7 @@
             <Label Text="Edad" />
             <Entry x:Name="EntryEdad"
                    Placeholder="Edad" />
-            <Button x:Name="Registrar"
+            <Button x:Name="ButtonRegistrar"
                     Text="Registrarme"
                     Clicked="ButtonRegistrar_Clicked"/>
         </StackLayout>

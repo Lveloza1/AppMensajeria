@@ -9,10 +9,13 @@ namespace AppMensajeria.Models
         [Key]
         [Column("UsuarioID")]
         public int UsuarioID { get; set; }
+        [Column("Imagen")]
+        public byte[] Imagen { get; set; }
         [Required]
         [StringLength(255)]
         [Column("Nombre")]
         public string Nombre { get; set; }
+        [Required]
         [Column("Telefono")]
         public string Telefono { get; set; }
         [Column("Edad")]

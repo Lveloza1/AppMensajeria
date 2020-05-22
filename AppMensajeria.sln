@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppMensajeria.Android", "Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppMensajeria.iOS", "AppMensajeria.iOS\AppMensajeria.iOS.csproj", "{2A79D372-7BE8-4FBA-9D96-54EB7771E69F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppMensajeria", "AppMensajeria\AppMensajeria.csproj", "{A8DCEC1A-85B1-4C2E-B263-5B96BCAF3384}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppMensajeria", "AppMensajeria\AppMensajeria.csproj", "{A8DCEC1A-85B1-4C2E-B263-5B96BCAF3384}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
