@@ -24,18 +24,22 @@ namespace AppMensajeria.Contexts
             optionsBuilder.UseSqlite($"Filename={DbPath}");
         }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Mensaje>()
-        //        .HasOne(e => e.Usuario)
-        //        .WithMany()
-        //        .HasForeignKey(e => e.UsuarioID);
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Chat>()
+                .HasOne(e => e.Usuario)
+                .WithMany()
+                .HasForeignKey(e => e.UsuarioID);
+            modelBuilder.Entity<Mensaje>()
+                .HasOne(e => e.Usuario)
+                .WithMany()
+                .HasForeignKey(e => e.UsuarioID);
 
-        //    modelBuilder.Entity<Mensaje>()
-        //        .HasOne(e => e.Chat)
-        //        .WithMany()
-        //        .HasForeignKey(e => e.ChatID);
-        //}
+            modelBuilder.Entity<Mensaje>()
+                .HasOne(e => e.Chat)
+                .WithMany()
+                .HasForeignKey(e => e.ChatID);
+        }
         #endregion
     }
 }

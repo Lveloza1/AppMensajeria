@@ -11,7 +11,7 @@ namespace AppMensajeria.Models
         public int ChatID { get; set; }
         [Column("UsuarioID")]
         public int UsuarioID { get; set; }
-        public Usuario Usuario { get; set; }
+        public virtual Usuario Usuario { get; set; }
         [Required]
         [Column("Titulo")]
         public string Titulo { get; set; }

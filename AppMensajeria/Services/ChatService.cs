@@ -24,8 +24,9 @@ namespace AppMensajeria.Services
                 _context.Chats.Add(chat);
                 _context.SaveChanges();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 throw;
             }
         }

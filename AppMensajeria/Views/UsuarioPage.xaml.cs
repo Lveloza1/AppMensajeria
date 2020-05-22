@@ -19,14 +19,6 @@ namespace AppMensajeria.Views
             {
                 await DisplayAlert("Error", "El campo Nombre es obligatorio.", "Aceptar");
             }
-            if (EntryTelefono.Text == null || EntryTelefono.Text == "")
-            {
-                await DisplayAlert("Error", "El campo Telefono es obligatorio.", "Aceptar");
-            }
-            if (EntryEdad.Text == null || EntryEdad.Text == "")
-            {
-                await DisplayAlert("Error", "El campo Edad es obligatorio.", "Aceptar");
-            }
             else
             {
                 try
@@ -51,11 +43,5 @@ namespace AppMensajeria.Views
                 }
             }
         }
-        //protected async override void OnAppearing()
-        //{
-        //    base.OnAppearing();
-        //    Usuarios = await service.ObtenerArtistasApi();
-        //    ListArtistas.ItemsSource = Artistas;
-        //}
     }
 }

@@ -22,7 +22,7 @@
             <Label Text="Telefono" />
             <Entry x:Name="EntryTelefono"
                    Placeholder="Teléfono" />
-            <Label Text="Nombre" />
+            <Label Text="Edad" />
             <Entry x:Name="EntryEdad"
                    Placeholder="Edad" />
             <Button x:Name="Registrar"
