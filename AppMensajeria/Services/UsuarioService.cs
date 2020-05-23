@@ -30,7 +30,7 @@ namespace AppMensajeria.Services
                 throw;
             }
         }
-        public Usuario ObtenerUsusarioPorTelefono(string telefono)
+        public Usuario ObtenerUsusarioPorTelefono(int telefono)
         {
             ObservableCollection<Usuario> usuarios = ObtenerUsuarios();
             Usuario usuario = _context.Usuarios.Where(e => e.Telefono == telefono).FirstOrDefault();
