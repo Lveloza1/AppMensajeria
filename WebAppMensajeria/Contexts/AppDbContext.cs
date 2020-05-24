@@ -5,11 +5,6 @@ namespace AppMensajeria.Contexts
 {
     public class AppDbContext : DbContext
     {
-        private readonly string DbPath = string.Empty;
-        public AppDbContext(string dbPath)
-        {
-            DbPath = dbPath;
-        }
 
         #region ListadoDeDatos
         public DbSet<Usuario> Usuarios { get; set; }
@@ -22,7 +17,7 @@ namespace AppMensajeria.Contexts
         #region Configuracion
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite($"Filename={DbPath}");
+            optionsBuilder.UseSqlite("Filename=./AppMesajeria.db");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
