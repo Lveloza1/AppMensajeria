@@ -4,8 +4,6 @@ using AppMensajeria.Services;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
-using System.Drawing;
-using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -19,7 +17,13 @@ namespace AppMensajeria.Views
             InitializeComponent();
         }
         private MediaFile _mediaFile;
-        private async void btnSelectPic_Clicked(object sender, EventArgs e)
+
+        public static Usuario this_usuario;
+        public static Usuario GetThisUsuario()
+        {
+            return this_usuario;
+        }
+        private async void ButtonSelectPic_Clicked(object sender, EventArgs e)
         {
             await CrossMedia.Current.Initialize();
             if (!CrossMedia.Current.IsPickPhotoSupported)
@@ -51,25 +55,18 @@ namespace AppMensajeria.Views
             else
             {
                 try
-                {
-
-                    System.Drawing.Image imagen = System.Drawing.Image.FromStream(_mediaFile.GetStream());
-                    MemoryStream ms = new MemoryStream();
-                    imagen.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                    var bytes = ms.ToArray();
-        
+                {      
                     Usuario usuario = new Usuario{
-                        Imagen = bytes,
                         Nombre = EntryNombre.Text,
-                        Telefono = EntryTelefono.Text,
-                        Edad = int.Parse(EntryEdad.Text)
+                        Telefono = int.Parse(EntryTelefono.Text),
                     };
                     UsuarioService service = new UsuarioService();
                     service.CrearUsuario(usuario);
+                    this_usuario = usuario;
                     await DisplayAlert("Exito", "Su perfil ha sido almacenado.", "Aceptar");
+                    ButtonSelectPic.IsVisible = false;
                     EntryNombre.IsEnabled = false;
                     EntryTelefono.IsEnabled = false;
-                    EntryEdad.IsEnabled = false;
                     ButtonRegistrar.IsVisible = false;
                     formBuscarUsuario.IsVisible = false;
                 }
@@ -89,19 +86,18 @@ namespace AppMensajeria.Views
             {
                 try
                 {
-                    string telefono = EntryBuscarTelefono.Text;
+                    int telefono = int.Parse(EntryBuscarTelefono.Text);
                     UsuarioService service = new UsuarioService();
                     Usuario usuario = service.ObtenerUsusarioPorTelefono(telefono);
                     if(usuario != null)
                     {
+                        this_usuario = usuario;
                         EntryNombre.Text = usuario.Nombre;
-                        EntryTelefono.Text = usuario.Telefono;
-                        EntryEdad.Text = (usuario.Edad).ToString();
+                        EntryTelefono.Text = (usuario.Telefono).ToString();
 
                         EntryNombre.IsEnabled = false;
                         EntryTelefono.IsEnabled = false;
-                        EntryEdad.IsEnabled = false;
-                        EntryBuscarTelefono.IsEnabled = false;
+                        ButtonSelectPic.IsVisible = false;
                         formBuscarUsuario.IsVisible = false;
                         ButtonRegistrar.IsVisible = false;
 

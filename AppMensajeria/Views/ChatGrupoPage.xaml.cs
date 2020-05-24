@@ -25,7 +25,7 @@ namespace AppMensajeria.Views
         }
         protected override void OnAppearing()
         {
-            Grupos = chatService.ObtenerChats(); //De tipo grupo
+            Grupos = chatService.ObtenerChatGrupo();
             PickerGrupo.ItemsSource = Grupos;
             Usuarios = usuarioService.ObtenerUsuarios();
             PickerUsuario.ItemsSource = Usuarios;
@@ -35,18 +35,56 @@ namespace AppMensajeria.Views
 
             try
             {
+                if (EntryNombreGrupo.Text == null || EntryNombreGrupo.Text == "")
+                {
+                    await DisplayAlert("Error", "Debe ingresar un nombre para el grupo.", "Aceptar");
+                }
+                else
+                {
+                    Chat chat = new Chat
+                    {
+                        Nombre = EntryNombreGrupo.Text,
+                        Tipo = true
+                    };
+                    ChatService service = new ChatService();
+                    service.CrearChat(chat);
+
+                    Usuario this_usuario = UsuarioPage.GetThisUsuario();
+
+                    UsuarioChat usuariochat = new UsuarioChat
+                    {
+                        UsuarioID = this_usuario.UsuarioID,
+                        ChatID = chat.ChatID
+                    };
+                    UsuarioChatService service2 = new UsuarioChatService();
+                    service2.CrearUsuarioChat(usuariochat);
+
+                    await DisplayAlert("Exito", "Un nuevo grupo ha sido creado.", "Aceptar");
+                    EntryNombreGrupo.Text = "";
+
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", "Ocurrio el siguiente error: " + ex.Message, "Aceptar");
+            }
+
+        }
+        private async void ButtonAgregarAGrupo_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
                 ChatSeleccionado = (Chat)PickerGrupo.SelectedItem;
                 UsuarioSeleccionado = (Usuario)PickerUsuario.SelectedItem;
 
-                Chat chat = new Chat
+                UsuarioChat usuariochat = new UsuarioChat
                 {
-                    Titulo = EntryNombreGrupo.Text,
-                    Tipo = "grupo",
+                    UsuarioID = UsuarioSeleccionado.UsuarioID,
+                    ChatID = ChatSeleccionado.ChatID
                 };
-                ChatService service = new ChatService();
-                service.CrearChat(chat);
-                await DisplayAlert("Exito", "Un nuevo grupo ha sido creado.", "Aceptar");
-                EntryNombreGrupo.Text = "";
+                UsuarioChatService service = new UsuarioChatService();
+                service.CrearUsuarioChat(usuariochat);
+                await DisplayAlert("Exito", UsuarioSeleccionado.Nombre + "Fue agregado a " +ChatSeleccionado.Nombre, "Aceptar");
             }
             catch (Exception ex)
             {

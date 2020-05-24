@@ -14,27 +14,34 @@
                     Android="20"
                     iOS="50" />
             </StackLayout.Padding>
-            <StackLayout x:Name="formBuscarUsuario">
-                <Label Text="Buscar mi usuaio" />
+            <Grid x:Name="formBuscarUsuario">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70*" />
+                    <ColumnDefinition Width="30*" />
+                </Grid.ColumnDefinitions>
+                <Label Text="Buscar mi usuaio"/>
                 <Entry x:Name="EntryBuscarTelefono"
-                   Placeholder="Ingrese su numero de telefono" />
+                   Placeholder="Numero de telefono"
+                       Grid.Row="1"/>
                 <Button x:Name="ButtonBuscarUsuario"
                     Text="Buscar"
-                    Clicked="ButtonBuscarUsuario_Clicked"/>
-            </StackLayout>
-            <Image x:Name="ImageView" Source="no_image.jpeg" HeightRequest="300" WidthRequest="400" />
-            <Button x:Name="btnSelectPic"
+                    Clicked="ButtonBuscarUsuario_Clicked"
+                        Grid.Row="1"
+                        Grid.Column="1"/>
+            </Grid>
+            <Image x:Name="ImageView" Source="no_image.jpeg" HeightRequest="150" WidthRequest="150" />
+                <Button x:Name="ButtonSelectPic"
                     Text="Select picture"
-                    Clicked="btnSelectPic_Clicked"/>
-            <Label Text="Nombre" />
-            <Entry x:Name="EntryNombre"
+                    Clicked="ButtonSelectPic_Clicked"/>
+                <Label Text="Nombre" />
+                <Entry x:Name="EntryNombre"
                    Placeholder="Nombre" />
-            <Label Text="Telefono" />
-            <Entry x:Name="EntryTelefono"
+                <Label Text="Telefono" />
+                <Entry x:Name="EntryTelefono"
                    Placeholder="Teléfono" />
-            <Label Text="Edad" />
-            <Entry x:Name="EntryEdad"
-                   Placeholder="Edad" />
             <Button x:Name="ButtonRegistrar"
                     Text="Registrarme"
                     Clicked="ButtonRegistrar_Clicked"/>

@@ -34,12 +34,29 @@ namespace AppMensajeria.Views
                 UsuarioSeleccionado = (Usuario)PickerUsuario.SelectedItem;
                 Chat chat = new Chat
                 {
-                   UsuarioID = UsuarioSeleccionado.UsuarioID,
-                   Titulo = UsuarioSeleccionado.Nombre,
-                   Tipo = "privado"
+                   Nombre = "",
+                   Tipo = false
                 };
                 ChatService service = new ChatService();
                 service.CrearChat(chat);
+
+                Usuario this_usuario = UsuarioPage.GetThisUsuario();
+
+                UsuarioChat usuariochat = new UsuarioChat
+                {
+                    UsuarioID = this_usuario.UsuarioID,
+                    ChatID = chat.ChatID
+                };
+                UsuarioChat usuariochat2 = new UsuarioChat
+                {
+                    UsuarioID = UsuarioSeleccionado.UsuarioID,
+                    ChatID = chat.ChatID
+                };
+
+                UsuarioChatService service2 = new UsuarioChatService();
+                service2.CrearUsuarioChat(usuariochat);
+                service2.CrearUsuarioChat(usuariochat2);
+
                 await DisplayAlert("Exito", "Un nuevo chat privado ha sido creado.", "Aceptar");
             }
             catch (Exception ex)

@@ -2,6 +2,7 @@
 using AppMensajeria.Models;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace AppMensajeria.Services
 {
@@ -29,6 +30,12 @@ namespace AppMensajeria.Services
                 Console.WriteLine(ex.Message);
                 throw;
             }
+        }
+        public ObservableCollection<Chat> ObtenerChatGrupo()
+        {
+            ObservableCollection<Chat>  Chats = ObtenerChats();
+            Chats.Where(e => e.Tipo == true);
+            return Chats;
         }
 
     }

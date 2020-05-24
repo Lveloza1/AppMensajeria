@@ -29,11 +29,11 @@
             <Picker x:Name="PickerGrupo"
                     Title="Seleccione un grupo"
                     ItemsSource="{Binding Grupos}"
-                    ItemDisplayBinding="{Binding Titulo}"
+                    ItemDisplayBinding="{Binding Nombre}"
                     SelectedItem="{Binding ChatSeleccionado}"/>
-            <Button x:Name="Crear"
-                    Text="Crear Nuevo"
-                    Clicked="ButtonCrearGrupo_Clicked"/>
+            <Button x:Name="ButtonAgregarAGrupo"
+                    Text="Agregar"
+                    Clicked="ButtonAgregarAGrupo_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
