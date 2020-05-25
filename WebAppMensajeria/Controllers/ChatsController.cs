@@ -30,10 +30,10 @@ namespace WebAppMensajeria.Controllers
         }
 
         // GET: api/Chats/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Chat>> GetChat(int id)
+        [HttpGet("{true}")]
+        public async Task<ActionResult<IEnumerable<Chat>>> ListaGrupos()
         {
-            var chat = await _context.Chats.FindAsync(id);
+            var chat = await _context.Chats.Where(x=> x.Tipo==true).ToListAsync();
 
             if (chat == null)
             {
@@ -43,38 +43,19 @@ namespace WebAppMensajeria.Controllers
             return chat;
         }
 
-        // PUT: api/Chats/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutChat(int id, Chat chat)
+        // GET: api/Chats/5
+        [HttpGet("{false}")]
+        public async Task<ActionResult<IEnumerable<Chat>>> ListaPrivado()
         {
-            if (id != chat.ChatID)
+            var chat = await _context.Chats.Where(x => x.Tipo == false).ToListAsync();
+
+            if (chat == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(chat).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ChatExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return chat;
         }
-
         // POST: api/Chats
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -85,27 +66,6 @@ namespace WebAppMensajeria.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetChat", new { id = chat.ChatID }, chat);
-        }
-
-        // DELETE: api/Chats/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Chat>> DeleteChat(int id)
-        {
-            var chat = await _context.Chats.FindAsync(id);
-            if (chat == null)
-            {
-                return NotFound();
-            }
-
-            _context.Chats.Remove(chat);
-            await _context.SaveChangesAsync();
-
-            return chat;
-        }
-
-        private bool ChatExists(int id)
-        {
-            return _context.Chats.Any(e => e.ChatID == id);
         }
     }
 }
