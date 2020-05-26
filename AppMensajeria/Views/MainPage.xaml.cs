@@ -30,6 +30,9 @@ namespace AppMensajeria.Views
             {
                 switch (id)
                 {
+                    case (int)MenuItemType.Mensajeria:
+                        MenuPages.Add(id, new NavigationPage(new MensajeriaPage()));
+                        break;
                     case (int)MenuItemType.Perfil:
                         MenuPages.Add(id, new NavigationPage(new UsuarioPage()));
                         break;

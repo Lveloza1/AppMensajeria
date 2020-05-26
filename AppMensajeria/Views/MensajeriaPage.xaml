@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="AppMensajeria.Views.MensajeriaPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout.Padding>
+                <OnPlatform
+                    x:TypeArguments="Thickness"
+                    Android="20"
+                    iOS="50" />
+            </StackLayout.Padding>
+            <Picker x:Name="PickerChats"
+                    Title="Seleccione un usuario"
+                    ItemsSource="{Binding Chat}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                    SelectedItem="{Binding ChatSeleccionado}"/>
+            <ListView x:Name="ListMensajes"
+                      HasUnevenRows="True"
+                      SeparatorVisibility="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame CornerRadius="20"
+                                   HasShadow="True"
+                                   Margin="3">
+                            <StackLayout Orientation="Vertical">
+                                <Grid VerticalOptions="CenterAndExpand">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <Label Grid.Column="0"
+                                               Text="Usuario: "
+                                               FontAttributes="Bold" />
+
+                                    <Label Grid.Column="1"
+                                               Text="{Binding Nombre}" />
+
+                                    <Label Grid.Row="1"
+                                               Grid.Column="0"
+                                               Text="Contenido: "
+                                               FontAttributes="Bold" />
+
+                                    <Label Grid.Row="1"
+                                               Grid.Column="1"
+                                               Text="{Binding Contenido}" />
+
+                                    <Label Grid.Row="2"
+                                               Grid.Column="0"
+                                               Text="Date: "
+                                               FontAttributes="Bold" />
+
+                                    <Label Grid.Row="2"
+                                               Grid.Column="1"
+                                               Text="{Binding InfoDate}" />
+
+                                    <Label Grid.Row="3"
+                                               Grid.Column="0"
+                                               Text="Estado: "
+                                               FontAttributes="Bold" />
+
+                                    <Label Grid.Row="3"
+                                               Grid.Column="1"
+                                               Text="{Binding Estado}" />
+                                </Grid>
+                            </StackLayout>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            </ListView>
+            <Entry x:Name="EntryContenido"
+                   Placeholder="Escriba su Mensaje"/>
+            <Image x:Name="ImagenEnviar" HeightRequest="50" WidthRequest="50" />
+            <Button x:Name="ButtonSelectPicEnviar"
+                    Text="Image"
+                    Clicked="ButtonSelectPicEnviar_Clicked"/>
+            <Button x:Name="EnviarMensaje"
+                    Text="Enviar"
+                    Clicked="EnviarMensaje_Clicked"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

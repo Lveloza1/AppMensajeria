@@ -7,6 +7,7 @@ namespace AppMensajeria.Models
     public enum MenuItemType
     {
         About,
+        Mensajeria,
         Perfil,
         Privado,
         Grupos

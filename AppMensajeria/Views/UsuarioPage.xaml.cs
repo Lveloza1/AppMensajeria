@@ -62,7 +62,7 @@ namespace AppMensajeria.Views
                     {
                         Imagen = ImageToBase64(file),
                         Nombre = EntryNombre.Text,
-                        Telefono = int.Parse(EntryTelefono.Text),
+                        Telefono = EntryTelefono.Text,
                     };
                     UsuarioService service = new UsuarioService();
                     await service.CrearUsuarioApi(usuario);
@@ -91,7 +91,7 @@ namespace AppMensajeria.Views
             {
                 try
                 {
-                    int telefono = int.Parse(EntryBuscarTelefono.Text);
+                    string telefono = EntryBuscarTelefono.Text;
                     UsuarioService service = new UsuarioService();
                     Usuario usuario = service.ObtenerUsusarioPorTelefono(telefono);
                     if(usuario != null)

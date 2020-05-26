@@ -36,7 +36,7 @@ namespace AppMensajeria.Services
                 throw;
             }
         }
-        public Usuario ObtenerUsusarioPorTelefono(int telefono)
+        public Usuario ObtenerUsusarioPorTelefono(string telefono)
         {
             Usuario usuario = _context.Usuarios.Where(e => e.Telefono == telefono).FirstOrDefault();
             return usuario;
