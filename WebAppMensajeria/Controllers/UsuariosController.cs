@@ -29,30 +29,23 @@ namespace WebAppMensajeria.Contexts
             return await _context.Usuarios.ToListAsync();
         }
 
-        // GET: api/Usuarios/5
-        [HttpGet("{telefono}")]
-        public async Task<ActionResult<Usuario>> GetUsuario(int telefono)
-        {
-            var usuario = await _context.Usuarios.Where(x=> x.Telefono == telefono).FirstOrDefaultAsync();
-
-            if (usuario == null)
-            {
-                return NotFound();
-            }
-
-            return usuario;
-        }
-
         // POST: api/Usuarios
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
         {
-            _context.Usuarios.Add(usuario);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUsuario", new { id = usuario.UsuarioID }, usuario);
+            var Validarusuario = await _context.Usuarios.Where(x=>x.Telefono==usuario.Telefono).FirstOrDefaultAsync();
+            if (Validarusuario == null)
+            {
+                _context.Usuarios.Add(usuario);
+                await _context.SaveChangesAsync();
+                return CreatedAtAction("GetUsuario", new { id = usuario.UsuarioID }, usuario);
+            }
+            else {
+                return NotFound();
+            }
+            
         }
     }
 }

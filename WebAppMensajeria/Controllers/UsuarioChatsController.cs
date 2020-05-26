@@ -26,10 +26,22 @@ namespace WebAppMensajeria.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UsuarioChat>>> GetUsuarioChats()
         {
-            return await _context.UsuarioChats.ToListAsync();
+            return await _context.UsuarioChats.Include(x => x.Usuario).Include(x => x.Chat).ToListAsync();
         }
 
-        
+        // GET: api/UsuarioChats
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<UsuarioChat>>> GetUsuarioChatbyid(int id)
+        {
+            return await _context.UsuarioChats.Include(x => x.Usuario).Include(x => x.Chat).Where(x => x.UsuarioID == id).ToListAsync();
+        }
+        // GET: api/UsuarioChats
+        [HttpGet("Chat/{id}")]
+        public async Task<ActionResult<IEnumerable<UsuarioChat>>> GetUsuarioChatbychat(int id)
+        {
+            return await _context.UsuarioChats.Include(x => x.Usuario).Include(x => x.Chat).Where(x => x.ChatID == id).ToListAsync();
+        }
+
         // POST: api/UsuarioChats
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

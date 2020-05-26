@@ -29,33 +29,6 @@ namespace WebAppMensajeria.Controllers
             return await _context.Chats.ToListAsync();
         }
 
-        // GET: api/Chats/5
-        [HttpGet("{true}")]
-        public async Task<ActionResult<IEnumerable<Chat>>> ListaGrupos()
-        {
-            var chat = await _context.Chats.Where(x=> x.Tipo==true).ToListAsync();
-
-            if (chat == null)
-            {
-                return NotFound();
-            }
-
-            return chat;
-        }
-
-        // GET: api/Chats/5
-        [HttpGet("{false}")]
-        public async Task<ActionResult<IEnumerable<Chat>>> ListaPrivado()
-        {
-            var chat = await _context.Chats.Where(x => x.Tipo == false).ToListAsync();
-
-            if (chat == null)
-            {
-                return NotFound();
-            }
-
-            return chat;
-        }
         // POST: api/Chats
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

@@ -33,7 +33,7 @@ namespace WebAppMensajeria.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Mensaje>> GetMensaje(int id)
         {
-            var Mensaje = await _context.Mensajes.Include(x=>x.UsuarioChat).Where(x => x.UsuarioChatID == id).FirstOrDefaultAsync();
+            var Mensaje = await _context.Mensajes.Include(x=>x.UsuarioChat).Where(x => x.UsuarioChatID== id).FirstOrDefaultAsync();
 
             if (Mensaje == null)
             {
