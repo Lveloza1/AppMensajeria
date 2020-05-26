@@ -40,5 +40,22 @@ namespace WebAppMensajeria.Controllers
 
             return CreatedAtAction("GetChat", new { id = chat.ChatID }, chat);
         }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteChats(int id)
+        {
+            var chats = await _context.Chats.FindAsync(id);
+            if (chats != null)
+            {
+                _context.Chats.Remove(chats);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
+
+        }
+
     }
 }

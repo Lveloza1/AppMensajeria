@@ -14,7 +14,7 @@ namespace AppMensajeria.Services
     public class UsuarioService
     {
         private readonly AppDbContext _context;
-        private const string UsuarioAPI = "https://app-mensajeria.azurewebsites.net/api/Usuarios";
+        private const string UsuarioAPI = "https://appmensajeria.azurewebsites.net/api/Usuarios";
 
         public UsuarioService()
         {
@@ -42,7 +42,7 @@ namespace AppMensajeria.Services
             return usuario;
 
         }
-
+        //Obtiene lista de usuarios
         public async Task<ObservableCollection<Usuario>> ObtenerUsuariosApi()
         {
             List<Usuario> usuarios = new List<Usuario>();
@@ -63,7 +63,7 @@ namespace AppMensajeria.Services
             }
             return usuarios.ToObservableCollection();
         }
-
+        //Crea usuario nuevo y chat privados
         public async Task CrearUsuarioApi(Usuario usuario)
         {
             try

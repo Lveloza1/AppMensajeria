@@ -47,12 +47,11 @@ namespace WebAppMensajeria.Controllers
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         public async Task<ActionResult<UsuarioChat>> PostUsuarioChat(UsuarioChat usuarioChat)
-        {
+        {            
             _context.UsuarioChats.Add(usuarioChat);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetUsuarioChat", new { id = usuarioChat.UsuarioChatID }, usuarioChat);
-        }
-
+        }        
     }
 }

@@ -6,10 +6,10 @@ namespace AppMensajeria.Models
 {
     public enum MenuItemType
     {
+        About,
         Perfil,
         Privado,
-        Grupos,
-        About
+        Grupos
     }
     public class HomeMenuItem
     {

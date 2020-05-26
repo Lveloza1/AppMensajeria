@@ -55,8 +55,11 @@ namespace AppMensajeria.Views
                 await DisplayAlert("Error", "El campo Telefono es obligatorio.", "Aceptar");
             }
             else
-            {   
-                    Usuario usuario = new Usuario{
+            {
+                try
+                {
+                    Usuario usuario = new Usuario
+                    {
                         Imagen = ImageToBase64(file),
                         Nombre = EntryNombre.Text,
                         Telefono = int.Parse(EntryTelefono.Text),
@@ -70,6 +73,11 @@ namespace AppMensajeria.Views
                     EntryTelefono.IsEnabled = false;
                     ButtonRegistrar.IsVisible = false;
                     formBuscarUsuario.IsVisible = false;
+                }
+                catch (Exception ex)
+                {
+                    await DisplayAlert("Error", "Ocurrio el siguiente error: " + ex.Message, "Aceptar");
+                }
 
             }
         }
@@ -116,7 +124,6 @@ namespace AppMensajeria.Views
             byte[] imageBytes = File.ReadAllBytes(file.Path);
             string base64String = Convert.ToBase64String(imageBytes);
             return base64String;
-
         }
     }
 }
