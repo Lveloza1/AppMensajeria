@@ -24,6 +24,23 @@
             <Button x:Name="CrearPrivado"
                     Text="Crear Nuevo"
                     Clicked="ButtonCrearPrivado_Clicked"/>
+            <ListView x:Name="ListChatSPrivados"
+                      HasUnevenRows="True"
+                      SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame CornerRadius="20"
+                                   HasShadow="True"
+                                   Margin="3">
+                                <StackLayout Orientation="Vertical">
+                                    <Label Text="{Binding Nombre}"/>
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

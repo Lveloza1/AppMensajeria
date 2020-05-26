@@ -32,7 +32,7 @@
                         Grid.Row="1"
                         Grid.Column="1"/>
             </Grid>
-            <Image x:Name="ImageView" Source="no_image.jpeg" HeightRequest="150" WidthRequest="150" />
+            <Image x:Name="ImageView" Source="noimage.png" HeightRequest="150" WidthRequest="150" />
                 <Button x:Name="ButtonSelectPic"
                     Text="Select picture"
                     Clicked="ButtonSelectPic_Clicked"/>

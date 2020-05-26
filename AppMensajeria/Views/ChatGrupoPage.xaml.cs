@@ -25,7 +25,7 @@ namespace AppMensajeria.Views
         }
         protected override void OnAppearing()
         {
-            Grupos = chatService.ObtenerChatGrupo();
+            Grupos = chatService.ObtenerChatsGrupo();
             PickerGrupo.ItemsSource = Grupos;
             Usuarios = usuarioService.ObtenerUsuarios();
             PickerUsuario.ItemsSource = Usuarios;
@@ -59,6 +59,9 @@ namespace AppMensajeria.Views
                     UsuarioChatService service2 = new UsuarioChatService();
                     service2.CrearUsuarioChat(usuariochat);
 
+                    Grupos = chatService.ObtenerChatsGrupo();
+                    PickerGrupo.ItemsSource = Grupos;
+
                     await DisplayAlert("Exito", "Un nuevo grupo ha sido creado.", "Aceptar");
                     EntryNombreGrupo.Text = "";
 
@@ -84,7 +87,7 @@ namespace AppMensajeria.Views
                 };
                 UsuarioChatService service = new UsuarioChatService();
                 service.CrearUsuarioChat(usuariochat);
-                await DisplayAlert("Exito", UsuarioSeleccionado.Nombre + "Fue agregado a " +ChatSeleccionado.Nombre, "Aceptar");
+                await DisplayAlert("Exito", UsuarioSeleccionado.Nombre + " fue agregado a " +ChatSeleccionado.Nombre, "Aceptar");
             }
             catch (Exception ex)
             {

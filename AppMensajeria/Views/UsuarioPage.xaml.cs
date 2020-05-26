@@ -1,9 +1,13 @@
-﻿using Android.Graphics.Drawables;
+﻿using Android.Graphics;
+using Android.Graphics.Drawables;
 using AppMensajeria.Models;
 using AppMensajeria.Services;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
+using System.Drawing;
+using System.IO;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,7 +20,7 @@ namespace AppMensajeria.Views
         {
             InitializeComponent();
         }
-        private MediaFile _mediaFile;
+        private MediaFile file;
 
         public static Usuario this_usuario;
         public static Usuario GetThisUsuario()
@@ -33,13 +37,14 @@ namespace AppMensajeria.Views
             }
             else
             {
-                var mediaOption = new PickMediaOptions()
+                file = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions
                 {
-                    PhotoSize = PhotoSize.Medium
-                };
-                _mediaFile = await CrossMedia.Current.PickPhotoAsync();
-                if (_mediaFile == null)return;
-                ImageView.Source = ImageSource.FromStream(() => _mediaFile.GetStream());
+                    PhotoSize = PhotoSize.Medium,
+                    CompressionQuality = 40
+                });
+                
+                if (file == null)return;
+                ImageView.Source = ImageSource.FromStream(() => file.GetStream());
             }
         }
         private async void ButtonRegistrar_Clicked(object sender, EventArgs e)
@@ -55,15 +60,16 @@ namespace AppMensajeria.Views
             else
             {
                 try
-                {      
-                    Usuario usuario = new Usuario{
+                {
+                    Usuario usuario = new Usuario {
+                        Imagen = ImageToBase64(file),
                         Nombre = EntryNombre.Text,
                         Telefono = int.Parse(EntryTelefono.Text),
                     };
                     UsuarioService service = new UsuarioService();
                     service.CrearUsuario(usuario);
                     this_usuario = usuario;
-                    await DisplayAlert("Exito", "Su perfil ha sido almacenado.", "Aceptar");
+                    await DisplayAlert("Exito", "Su perfil ha sido almacenado.", "Aceptar");                   
                     ButtonSelectPic.IsVisible = false;
                     EntryNombre.IsEnabled = false;
                     EntryTelefono.IsEnabled = false;
@@ -112,6 +118,15 @@ namespace AppMensajeria.Views
                     await DisplayAlert("Error", "Ocurrio el siguiente error: " + ex.Message, "Aceptar");
                 }
             }
+        }
+
+        public string ImageToBase64(MediaFile file)
+        {
+            if (file == null)return "";
+            byte[] imageBytes = File.ReadAllBytes(file.Path);
+            string base64String = Convert.ToBase64String(imageBytes);
+            return base64String;
+
         }
     }
 }

@@ -31,10 +31,15 @@ namespace AppMensajeria.Services
                 throw;
             }
         }
-        public ObservableCollection<Chat> ObtenerChatGrupo()
+
+        public ObservableCollection<Chat> ObtenerChatsPrivados()
         {
-            ObservableCollection<Chat>  Chats = ObtenerChats();
-            Chats.Where(e => e.Tipo == true);
+            ObservableCollection<Chat> Chats = ObtenerChats().Where(e => e.Tipo == false).ToObservableCollection();
+            return Chats;
+        }
+        public ObservableCollection<Chat> ObtenerChatsGrupo()
+        {
+            ObservableCollection<Chat> Chats = ObtenerChats().Where(e => e.Tipo == true).ToObservableCollection();
             return Chats;
         }
 

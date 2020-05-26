@@ -16,7 +16,7 @@ namespace AppMensajeria
         }
 
         public static AppDbContext GetContext() {
-            string DbPath = DependencyService.Get<IConfigDataBase>().GetFullPath("dbMensajeria.db");
+            string DbPath = DependencyService.Get<IConfigDataBase>().GetFullPath("dbMensajeria1.db");
             return new AppDbContext(DbPath);
         }
 

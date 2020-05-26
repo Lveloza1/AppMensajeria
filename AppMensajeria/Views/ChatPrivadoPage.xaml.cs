@@ -22,6 +22,7 @@ namespace AppMensajeria.Views
         }
         protected override void OnAppearing()
         {
+            base.OnAppearing();
             Usuarios = usuarioService.ObtenerUsuarios();
             PickerUsuario.ItemsSource = Usuarios;
         }
