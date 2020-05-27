@@ -6,18 +6,17 @@ namespace AppMensajeria.Models
     [Table("Usuario")]
     public class Usuario
     {
-        /// <summary>
-        /// Falta agregar ruta de imagen
-        /// </summary>
         [Key]
         [Column("UsuarioID")]
-        public int UsuarioID { get; set; }
+        public int UsuarioID { get; set; }               
+        [Column("Imagen", TypeName = "BLOB")]
+        public string Imagen { get; set; }
         [Required]
-        [StringLength(255)]
         [Column("Nombre")]
+        [StringLength(255)]
         public string Nombre { get; set; }
         [Required]
         [Column("Telefono")]
-        public int Telefono { get; set; }
+        public string Telefono { get; set; }
     }
 }

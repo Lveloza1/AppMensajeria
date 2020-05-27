@@ -13,10 +13,11 @@ namespace AppMensajeria.Models
         [Column("UsuarioChatID")]
         public int UsuarioChatID { get; set; }
         public UsuarioChat UsuarioChat { get; set; }
-        [Required]
         [StringLength(255)]
         [Column("Contenido")]
         public string Contenido { get; set; }
+        [Column("Imagen", TypeName ="BLOB")]
+        public string Imagen { get; set; }
         [Required]
         [StringLength(255)]
         [Column("InfoDate")]

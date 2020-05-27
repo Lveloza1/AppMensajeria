@@ -29,36 +29,18 @@ namespace WebAppMensajeria.Controllers
             return await _context.Mensajes.Include(x=>x.UsuarioChat).ToListAsync();
         }
 
-        // PUT: api/Mensajes/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutMensaje(int id, Mensaje mensaje)
+        // GET: api/Mensaje/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<Mensaje>>> GetMensaje(int id)
         {
-            if (id != mensaje.MensajeID)
+            var Mensaje = await _context.Mensajes.Include(x=>x.UsuarioChat).Where(x => x.UsuarioChat.ChatID== id).ToListAsync();
+
+            if (Mensaje == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(mensaje).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MensajeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Mensaje;
         }
 
         // POST: api/Mensajes
@@ -70,28 +52,9 @@ namespace WebAppMensajeria.Controllers
             _context.Mensajes.Add(mensaje);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMensaje", new { id = mensaje.MensajeID }, mensaje);
+            return Ok();
         }
 
-        // DELETE: api/Mensajes/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Mensaje>> DeleteMensaje(int id)
-        {
-            var mensaje = await _context.Mensajes.FindAsync(id);
-            if (mensaje == null)
-            {
-                return NotFound();
-            }
 
-            _context.Mensajes.Remove(mensaje);
-            await _context.SaveChangesAsync();
-
-            return mensaje;
-        }
-
-        private bool MensajeExists(int id)
-        {
-            return _context.Mensajes.Any(e => e.MensajeID == id);
-        }
     }
 }

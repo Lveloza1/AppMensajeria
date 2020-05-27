@@ -18,7 +18,7 @@ namespace WebAppMensajeria.Contexts
 
         public UsuariosController()
         {
-            _context =new AppDbContext();
+            _context = new AppDbContext();
             _context.Database.EnsureCreated();
         }
 
@@ -29,83 +29,79 @@ namespace WebAppMensajeria.Contexts
             return await _context.Usuarios.ToListAsync();
         }
 
-        // GET: api/Usuarios/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Usuario>> GetUsuario(int id)
+
+        [HttpGet("{telefono}")]
+        public async Task<ActionResult<Usuario>> GetUsuarioChatbyid(string telefono)
         {
-            var usuario = await _context.Usuarios.FindAsync(id);
-
-            if (usuario == null)
-            {
-                return NotFound();
-            }
-
-            return usuario;
+            return await _context.Usuarios.Where(x => x.Telefono == telefono).FirstOrDefaultAsync();
         }
-
-        // PUT: api/Usuarios/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUsuario(int id, Usuario usuario)
-        {
-            if (id != usuario.UsuarioID)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(usuario).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UsuarioExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
         // POST: api/Usuarios
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
+        public async Task<ActionResult<Usuario>> Post(Usuario usuario)
         {
-            _context.Usuarios.Add(usuario);
-            await _context.SaveChangesAsync();
+            var UsuariosAntiguos = await _context.Usuarios.ToListAsync();
+            var Validarusuario = await _context.Usuarios.Where(x => x.Telefono == usuario.Telefono).FirstOrDefaultAsync();
+            try
+            {
+                if (Validarusuario == null)
+                {
+                    _context.Usuarios.Add(usuario);
+                    foreach (var x in UsuariosAntiguos)
+                    {
+                        Chat chat = new Chat
+                        {
+                          Nombre = x.Nombre + " - " + usuario.Nombre,
+                          Tipo = false
+                        };
+                        _context.Chats.Add(chat);
+                        UsuarioChat usuarioChat = new UsuarioChat
+                        {
+                            UsuarioID = x.UsuarioID,
+                            Usuario=x,
+                            ChatID = chat.ChatID,
+                            Chat=chat
+                        };
+                        _context.UsuarioChats.Add(usuarioChat);
+                        UsuarioChat usuarioChat2 = new UsuarioChat
+                        {                            
+                            UsuarioID = usuario.UsuarioID,
+                            Usuario=usuario,
+                            ChatID = chat.ChatID,
+                            Chat = chat
+                        };
+                        _context.UsuarioChats.Add(usuarioChat2);
+                    }
+                    await _context.SaveChangesAsync();
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
-            return CreatedAtAction("GetUsuario", new { id = usuario.UsuarioID }, usuario);
         }
-
-        // DELETE: api/Usuarios/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Usuario>> DeleteUsuario(int id)
+        public async Task<ActionResult> DeleteUsuario(int id)
         {
-            var usuario = await _context.Usuarios.FindAsync(id);
-            if (usuario == null)
+            var Validarusuario = await _context.Usuarios.FindAsync(id);
+            if (Validarusuario != null)
+            {
+                _context.Usuarios.Remove(Validarusuario);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            else
             {
                 return NotFound();
             }
 
-            _context.Usuarios.Remove(usuario);
-            await _context.SaveChangesAsync();
-
-            return usuario;
-        }
-
-        private bool UsuarioExists(int id)
-        {
-            return _context.Usuarios.Any(e => e.UsuarioID == id);
         }
     }
 }
