@@ -26,14 +26,14 @@ namespace WebAppMensajeria.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Mensaje>>> GetMensajes()
         {
-            return await _context.Mensajes.Include(x=>x.UsuarioChat).ToListAsync();
+            return await _context.Mensajes.Include(x=>x.UsuarioChat).Include(x => x.UsuarioChat.Usuario).Include(x => x.UsuarioChat.Chat).ToListAsync();
         }
 
         // GET: api/Mensaje/5
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<Mensaje>>> GetMensaje(int id)
         {
-            var Mensaje = await _context.Mensajes.Include(x=>x.UsuarioChat).Where(x => x.UsuarioChat.ChatID== id).ToListAsync();
+            var Mensaje = await _context.Mensajes.Include(x=>x.UsuarioChat).Include(x => x.UsuarioChat.Usuario).Include(x=>x.UsuarioChat.Chat).Where(x => x.UsuarioChat.ChatID== id).ToListAsync();
 
             if (Mensaje == null)
             {
@@ -51,7 +51,6 @@ namespace WebAppMensajeria.Controllers
         {
             _context.Mensajes.Add(mensaje);
             await _context.SaveChangesAsync();
-
             return Ok();
         }
 

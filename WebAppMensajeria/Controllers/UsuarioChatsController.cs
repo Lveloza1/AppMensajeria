@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AppMensajeria.Contexts;
 using AppMensajeria.Models;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace WebAppMensajeria.Controllers
 {
@@ -41,17 +42,29 @@ namespace WebAppMensajeria.Controllers
         {
             return await _context.UsuarioChats.Include(x => x.Usuario).Include(x => x.Chat).Where(x => x.ChatID == id).ToListAsync();
         }
+        [HttpGet("ChatGrupo/{id}")]
+        public async Task<ActionResult<IEnumerable<UsuarioChat>>> GruposDelUsuario(int id)
+        {
+            return await _context.UsuarioChats.Include(x => x.Usuario).Include(x => x.Chat).Where(x=>x.Chat.Tipo==true).Where(x => x.UsuarioID == id).ToListAsync();
+        }
 
         // POST: api/UsuarioChats
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         public async Task<ActionResult<UsuarioChat>> PostUsuarioChat(UsuarioChat usuarioChat)
-        {            
-            _context.UsuarioChats.Add(usuarioChat);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUsuarioChat", new { id = usuarioChat.UsuarioChatID }, usuarioChat);
+        {
+            var Validarusuario = await _context.UsuarioChats.Where(x=>x.ChatID==usuarioChat.ChatID).Where(x=>x.UsuarioID==usuarioChat.UsuarioID).FirstOrDefaultAsync();
+            if (Validarusuario == null)
+            {
+                _context.UsuarioChats.Add(usuarioChat);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            else {
+                return NotFound();
+            }
+            
         }        
     }
 }

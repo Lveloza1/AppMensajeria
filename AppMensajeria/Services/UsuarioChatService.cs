@@ -78,13 +78,13 @@ namespace AppMensajeria.Services
             }
             return usuariochats.ToObservableCollection();
         }
-        //Obtener Integrantes del Chat 
-        public async Task<ObservableCollection<UsuarioChat>> ObtenerIntegrantesDelChatApi(string id)
+        //Obtener Grupos del usuario 
+        public async Task<ObservableCollection<UsuarioChat>> ObtenerGruposDelUsuarioApi(int id)
         {
             List<UsuarioChat> usuariochats = new List<UsuarioChat>();
             try
             {
-                Uri uri = new Uri(string.Format(UsuarioChatAPI + "/Chat/" + id, string.Empty));
+                Uri uri = new Uri(string.Format(UsuarioChatAPI + "/ChatGrupo/" + id, string.Empty));
                 HttpClient client = new HttpClient();
                 var response = await client.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
@@ -100,7 +100,7 @@ namespace AppMensajeria.Services
             return usuariochats.ToObservableCollection();
         }
         //Obtener Tabla UsuarioChat
-        public async Task<ObservableCollection<UsuarioChat>> ObtenerTablaUsuarioChatApi(string id)
+        public async Task<ObservableCollection<UsuarioChat>> ObtenerTablaUsuarioChatApi()
         {
             List<UsuarioChat> usuariochats = new List<UsuarioChat>();
             try

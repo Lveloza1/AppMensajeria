@@ -13,21 +13,22 @@ namespace AppMensajeria.Views
         public ObservableCollection<Usuario> Usuarios { get; set; }
         private readonly UsuarioService usuarioService;
         public Usuario UsuarioSeleccionado { get; set; }
-        public ObservableCollection<Chat> Grupos { get; set; }
-        private readonly ChatService chatService;
+        public ObservableCollection<UsuarioChat> Grupos { get; set; }
+        private readonly UsuarioChatService usuariochatService;
         public Chat ChatSeleccionado { get; set; }
+        Usuario this_usuario = UsuarioPage.GetThisUsuario();
         public ChatGrupoPage()
         {
             InitializeComponent();
-            chatService = new ChatService();
+            usuariochatService = new UsuarioChatService();
             usuarioService = new UsuarioService();
 
         }
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
-            Grupos = chatService.ObtenerChatsGrupo();
+            Grupos = await usuariochatService.ObtenerGruposDelUsuarioApi(this_usuario.UsuarioID);
             PickerGrupo.ItemsSource = Grupos;
-            Usuarios = usuarioService.ObtenerUsuarios();
+            Usuarios = await usuarioService.ObtenerUsuariosApi();
             PickerUsuario.ItemsSource = Usuarios;
         }
         private async void ButtonCrearGrupo_Clicked(object sender, EventArgs e)
@@ -47,7 +48,7 @@ namespace AppMensajeria.Views
                         Tipo = true
                     };
                     ChatService service = new ChatService();
-                    service.CrearChat(chat);
+                    await service.CrearChatApi(chat);
 
                     Usuario this_usuario = UsuarioPage.GetThisUsuario();
 
@@ -57,9 +58,9 @@ namespace AppMensajeria.Views
                         ChatID = chat.ChatID
                     };
                     UsuarioChatService service2 = new UsuarioChatService();
-                    service2.CrearUsuarioChat(usuariochat);
+                    service2.AgregarUsiarioAChatApi(usuariochat);
 
-                    Grupos = chatService.ObtenerChatsGrupo();
+                    Grupos = await usuariochatService.ObtenerGruposDelUsuarioApi(12);
                     PickerGrupo.ItemsSource = Grupos;
 
                     await DisplayAlert("Exito", "Un nuevo grupo ha sido creado.", "Aceptar");
@@ -86,7 +87,7 @@ namespace AppMensajeria.Views
                     ChatID = ChatSeleccionado.ChatID
                 };
                 UsuarioChatService service = new UsuarioChatService();
-                service.CrearUsuarioChat(usuariochat);
+                service.AgregarUsiarioAChatApi(usuariochat);
                 await DisplayAlert("Exito", UsuarioSeleccionado.Nombre + " fue agregado a " +ChatSeleccionado.Nombre, "Aceptar");
             }
             catch (Exception ex)
