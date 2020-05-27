@@ -12,6 +12,8 @@ namespace AppMensajeria.Contexts
         }
 
         #region ListadoDeDatos
+        public DbSet<Perfil> Perfiles { get; set; }
+
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Chat> Chats { get; set; }
         public DbSet<UsuarioChat> UsuarioChats { get; set; }

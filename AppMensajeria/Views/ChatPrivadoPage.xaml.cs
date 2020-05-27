@@ -41,11 +41,12 @@ namespace AppMensajeria.Views
                 ChatService service = new ChatService();
                 service.CrearChat(chat);
 
-                Usuario this_usuario = UsuarioPage.GetThisUsuario();
-
+                PerfilService perfil = new PerfilService();
+                var p = perfil.ObtenerPerfil();
                 UsuarioChat usuariochat = new UsuarioChat
                 {
-                    UsuarioID = this_usuario.UsuarioID,
+                    
+                    UsuarioID = p.Mi_UsuarioID,
                     ChatID = chat.ChatID
                 };
                 UsuarioChat usuariochat2 = new UsuarioChat

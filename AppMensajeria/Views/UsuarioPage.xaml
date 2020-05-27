@@ -14,22 +14,17 @@
                     Android="20"
                     iOS="50" />
             </StackLayout.Padding>
+            <Label Text="Buscar mi usuaio"/>
             <Grid x:Name="formBuscarUsuario">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="70*" />
                     <ColumnDefinition Width="30*" />
                 </Grid.ColumnDefinitions>
-                <Label Text="Buscar mi usuaio"/>
                 <Entry x:Name="EntryBuscarTelefono"
-                   Placeholder="Numero de telefono"
-                       Grid.Row="1"/>
+                       Placeholder="Numero de telefono"/>
                 <Button x:Name="ButtonBuscarUsuario"
-                    Text="Buscar"
-                    Clicked="ButtonBuscarUsuario_Clicked"
-                        Grid.Row="1"
+                        Text="Buscar"
+                        Clicked="ButtonBuscarUsuario_Clicked"
                         Grid.Column="1"/>
             </Grid>
             <Image x:Name="ImageView" Source="noimage.png" HeightRequest="150" WidthRequest="150" />

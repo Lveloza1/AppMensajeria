@@ -15,24 +15,25 @@ namespace AppMensajeria.Views
     public partial class MensajeriaPage : ContentPage
     {
         public ObservableCollection<UsuarioChat> UsuarioChats { get; set; }
-        private readonly UsuarioService usuarioService;
         private readonly UsuarioChatService service;
         private readonly MensajeService mensajeService;
         public Chat ChatSeleccionado { get; set; }
-        Usuario this_usuario = UsuarioPage.GetThisUsuario();
         private MediaFile file;
         public MensajeriaPage()
         {
             InitializeComponent();
             service = new UsuarioChatService();
             mensajeService = new MensajeService();
-            usuarioService = new UsuarioService();
+            ImageEnviar.IsVisible = false;
 
         }
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-            UsuarioChats = await service.ObtenerChatDelUsuarioApi(this_usuario.UsuarioID);
+
+            PerfilService perfil = new PerfilService();
+            var p = perfil.ObtenerPerfil();
+            UsuarioChats = await service.ObtenerChatDelUsuarioApi(p.Mi_UsuarioID);
             PickerChats.ItemsSource = UsuarioChats;
         }
 
@@ -57,8 +58,7 @@ namespace AppMensajeria.Views
                         Mensaje mensaje = new Mensaje
                         {
                             UsuarioChatID = usuarioChat.UsuarioChatID,
-                            Contenido = EntryMensaje.Text,
-                            //UsuarioChat = usuarioChat,
+                            Contenido = EntryMensaje.Text,        
                             //imagen = cuando la tengamos
                             InfoDate = DateTime.Now.ToString(),
                             Estado = true
@@ -66,6 +66,7 @@ namespace AppMensajeria.Views
                         UsuarioService service = new UsuarioService();
 
                         await mensajeService.EnviarMensajeApi(mensaje);
+
                         EntryMensaje.Text= "";
 
                     }
@@ -98,6 +99,8 @@ namespace AppMensajeria.Views
                 });
                 if (file == null) return;
             }
+            ImageEnviar.Source = ImageSource.FromStream(() => file.GetStream());
+            ImageEnviar.IsVisible = true;
 
         }
 
@@ -115,7 +118,16 @@ namespace AppMensajeria.Views
             var menuItem = sender as ListView;
             var mensaje = menuItem.SelectedItem as Mensaje;
 
-            await TextToSpeech.SpeakAsync(mensaje.Contenido);
+            var locales = await TextToSpeech.GetLocalesAsync();
+            var locale = locales.FirstOrDefault();
+            var settings = new SpeechOptions()
+            {
+                Volume = .75f,
+                Pitch = 1.0f,
+                Locale = locale
+            };
+
+            await TextToSpeech.SpeakAsync(mensaje.Contenido, settings);
         }
     }
 }

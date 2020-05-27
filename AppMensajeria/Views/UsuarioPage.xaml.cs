@@ -19,11 +19,6 @@ namespace AppMensajeria.Views
         }
         private MediaFile file;
 
-        public static Usuario this_usuario { get; set; }
-        public static Usuario GetThisUsuario()
-        {
-            return this_usuario;
-        }
         private async void ButtonSelectPic_Clicked(object sender, EventArgs e)
         {
             await CrossMedia.Current.Initialize();
@@ -70,7 +65,8 @@ namespace AppMensajeria.Views
                     if (current == NetworkAccess.Internet) 
                     {
                         await service.CrearUsuarioApi(usuario);
-                        this_usuario = await service.ObtenerUsuarioTelefonoApi(usuario.Telefono);
+                        PerfilService perfilService = new PerfilService();
+                        perfilService.CrearPerfil(await service.ObtenerUsuarioTelefonoApi(usuario.Telefono));
                         await DisplayAlert("Exito", "Su perfil ha sido almacenado.", "Aceptar");
                         ButtonSelectPic.IsVisible = false;
                         EntryNombre.IsEnabled = false;
@@ -108,7 +104,7 @@ namespace AppMensajeria.Views
                     {
                         string telefono = EntryBuscarTelefono.Text;
                         UsuarioService service = new UsuarioService();
-                        this_usuario = await service.ObtenerUsuarioTelefonoApi(telefono);
+                        var this_usuario = await service.ObtenerUsuarioTelefonoApi(telefono);
                         if (this_usuario != null)
                         {
                             EntryNombre.Text = this_usuario.Nombre;

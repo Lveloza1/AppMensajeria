@@ -28,8 +28,8 @@
                     SelectedItem="{Binding UsuarioSeleccionado}"/>
             <Picker x:Name="PickerGrupo"
                     Title="Seleccione un grupo"
-                    ItemsSource="{Binding Grupos}"
-                    ItemDisplayBinding="{Binding Nombre}"
+                    ItemsSource="{Binding ChatID}"
+                    ItemDisplayBinding="{Binding Chat.Nombre}"
                     SelectedItem="{Binding ChatSeleccionado}"/>
             <Button x:Name="ButtonAgregarAGrupo"
                     Text="Agregar"

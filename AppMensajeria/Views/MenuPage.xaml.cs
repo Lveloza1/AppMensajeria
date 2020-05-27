@@ -21,10 +21,9 @@ namespace AppMensajeria.Views
             menuItems = new List<HomeMenuItem>
             {
 
-                new HomeMenuItem {Id = MenuItemType.Mensajeria, Title="Mensajeria" },
                 new HomeMenuItem {Id = MenuItemType.Perfil, Title="Perfil" },
-                new HomeMenuItem {Id = MenuItemType.Privado, Title="Chats privados" },
-                new HomeMenuItem {Id = MenuItemType.Grupos, Title="Grupos" },
+                new HomeMenuItem {Id = MenuItemType.Mensajeria, Title="Mensajeria" },
+                new HomeMenuItem {Id = MenuItemType.Grupos, Title="Crear Grupos" },
                 new HomeMenuItem {Id = MenuItemType.About, Title="Acerca de" },
 
             };

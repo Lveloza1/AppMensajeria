@@ -24,7 +24,8 @@
             <ListView x:Name="ListMensajes"
                       HasUnevenRows="True"
                       SeparatorVisibility="None"
-                      ItemSelected="ItemEscuchar_Clicked">
+                      ItemSelected="ItemEscuchar_Clicked"
+                      SelectionMode="Single">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -87,16 +88,29 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <StackLayout Orientation="Horizontal">
-                    <Entry x:Name="EntryMensaje"
-                           Placeholder="Escribe tu mensaje..."/>
-                    <Button x:Name="ButtonSelectPicEnviar"
-                            ImageSource="adjuntar.png"
-                            Clicked="ButtonSelectPicEnviar_Clicked"/>
-                    <Button x:Name="ButtonEnviar"
-                                ImageSource="enviar.png"
-                                Clicked="EnviarMensaje_Clicked"/>
-                </StackLayout>
+            <Image x:Name="ImageEnviar" HeightRequest="30" WidthRequest="30"/>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80*"/>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="10*"/>
+                </Grid.ColumnDefinitions>
+                <Entry x:Name="EntryMensaje"
+                       Placeholder="Escribe tu mensaje..."
+                       HeightRequest="100"/>
+                <ImageButton x:Name="ButtonSelectPicEnviar"
+                             Source="adjuntar.png"
+                             Clicked="ButtonSelectPicEnviar_Clicked"
+                             Grid.Column="1"
+                             BackgroundColor="White"/>
+                <ImageButton x:Name="ButtonEnviar"
+                             Source="enviar.png"
+                             Clicked="EnviarMensaje_Clicked"
+                             Grid.Column="2"
+                             BackgroundColor="White"/>
+            </Grid>
+
             
         </StackLayout>
     </ContentPage.Content>

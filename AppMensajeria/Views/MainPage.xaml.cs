@@ -36,9 +36,6 @@ namespace AppMensajeria.Views
                     case (int)MenuItemType.Perfil:
                         MenuPages.Add(id, new NavigationPage(new UsuarioPage()));
                         break;
-                    case (int)MenuItemType.Privado:
-                        MenuPages.Add(id, new NavigationPage(new ChatPrivadoPage()));
-                        break;
                     case (int)MenuItemType.Grupos:
                         MenuPages.Add(id, new NavigationPage(new ChatGrupoPage()));
                         break;
