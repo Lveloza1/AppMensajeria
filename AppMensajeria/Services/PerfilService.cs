@@ -16,7 +16,7 @@ namespace AppMensajeria.Services
         }
         public Perfil ObtenerPerfil()
         {
-            return _context.Perfiles.Where(e=> e.Mi_UsuarioID != null ).FirstOrDefault();;
+            return _context.Perfiles.Where(e=> e.MiUsuarioID != null ).FirstOrDefault();;
         }
         public void CrearPerfil(Usuario usuario)
         {
@@ -24,10 +24,10 @@ namespace AppMensajeria.Services
             {
                 Perfil perfil = new Perfil
                 {
-                    Mi_UsuarioID = usuario.UsuarioID,
-                    Mi_Imagen = usuario.Imagen,
-                    Mi_Nombre = usuario.Nombre,
-                    Mi_Telefono = usuario.Telefono
+                    MiUsuarioID = usuario.UsuarioID,
+                    MiImagen = usuario.Imagen,
+                    MiNombre = usuario.Nombre,
+                    MiTelefono = usuario.Telefono
                 };
                 _context.Perfiles.Add(perfil);
                 _context.SaveChanges();
@@ -36,6 +36,12 @@ namespace AppMensajeria.Services
             {
                 throw;
             }
+        }
+
+        public void BorrarPerfil(Perfil perfil)
+        {
+            _context.Perfiles.Remove(perfil);
+            _context.SaveChanges();
         }
 
     }

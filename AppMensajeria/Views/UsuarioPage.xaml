@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="AppMensajeria.Views.UsuarioPage"
-             Title="Perfil de Usuuario">
+             Title="Perfil de Usuario">
     <ContentPage.Content>
         <StackLayout>
             <StackLayout.Padding>
@@ -14,28 +14,30 @@
                     Android="20"
                     iOS="50" />
             </StackLayout.Padding>
-            <Label Text="Buscar mi usuaio"/>
-            <Grid x:Name="formBuscarUsuario">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="70*" />
-                    <ColumnDefinition Width="30*" />
-                </Grid.ColumnDefinitions>
-                <Entry x:Name="EntryBuscarTelefono"
+            <StackLayout x:Name="formBuscarUsuario">
+                <Label Text="Buscar mi usuaio"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="70*" />
+                        <ColumnDefinition Width="30*" />
+                    </Grid.ColumnDefinitions>
+                    <Entry x:Name="EntryBuscarTelefono"
                        Placeholder="Numero de telefono"/>
-                <Button x:Name="ButtonBuscarUsuario"
+                    <Button x:Name="ButtonBuscarUsuario"
                         Text="Buscar"
                         Clicked="ButtonBuscarUsuario_Clicked"
                         Grid.Column="1"/>
-            </Grid>
+                </Grid>
+            </StackLayout>
             <Image x:Name="ImageView" Source="noimage.png" HeightRequest="150" WidthRequest="150" />
-                <Button x:Name="ButtonSelectPic"
+            <Button x:Name="ButtonSelectPic"
                     Text="Select picture"
                     Clicked="ButtonSelectPic_Clicked"/>
-                <Label Text="Nombre" />
-                <Entry x:Name="EntryNombre"
+            <Label Text="Nombre" />
+            <Entry x:Name="EntryNombre"
                    Placeholder="Nombre" />
-                <Label Text="Telefono" />
-                <Entry x:Name="EntryTelefono"
+            <Label Text="Telefono" />
+            <Entry x:Name="EntryTelefono"
                    Placeholder="Teléfono" />
             <Button x:Name="ButtonRegistrar"
                     Text="Registrarme"

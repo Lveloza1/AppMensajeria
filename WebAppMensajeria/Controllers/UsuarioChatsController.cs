@@ -65,6 +65,19 @@ namespace WebAppMensajeria.Controllers
                 return NotFound();
             }
             
-        }        
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult> DeleteUsuario()
+        {
+            var usuarios = await _context.UsuarioChats.ToListAsync();
+            foreach (var x in usuarios)
+            {
+                _context.UsuarioChats.Remove(x);
+
+            }
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }

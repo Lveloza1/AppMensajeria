@@ -41,21 +41,17 @@ namespace WebAppMensajeria.Controllers
             return Ok(chat);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteChats(int id)
+        [HttpDelete]
+        public async Task<ActionResult> DeleteUsuario()
         {
-            var chats = await _context.Chats.FindAsync(id);
-            if (chats != null)
+            var chats = await _context.Chats.ToListAsync();
+            foreach (var x in chats)
             {
-                _context.Chats.Remove(chats);
-                await _context.SaveChangesAsync();
-                return Ok();
-            }
-            else
-            {
-                return NotFound();
-            }
+                _context.Chats.Remove(x);
 
+            }
+            await _context.SaveChangesAsync();
+            return Ok();
         }
 
     }

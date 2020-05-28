@@ -6,6 +6,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 using AppMensajeria.Models;
+using AppMensajeria.Services;
 
 namespace AppMensajeria.Views
 {
@@ -42,6 +43,9 @@ namespace AppMensajeria.Views
                     case (int)MenuItemType.About:
                         MenuPages.Add(id, new NavigationPage(new AboutPage()));
                         break;
+                    //case (int)MenuItemType.LogOut:
+                    //    await DisplayAlert("Cerrar sesión", "¿Seguro que desea cerrar sesión?", "Yes", "No");
+                    //    break;
                 }
             }
 

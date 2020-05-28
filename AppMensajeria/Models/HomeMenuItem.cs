@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AppMensajeria.Models
+﻿namespace AppMensajeria.Models
 {
     public enum MenuItemType
-    {
-        About,
-        Mensajeria,
+    {    
         Perfil,
-        Privado,
-        Grupos
+        Mensajeria,   
+        Grupos,
+        About,
+        //LogOut
     }
     public class HomeMenuItem
     {

@@ -46,44 +46,49 @@ namespace WebAppMensajeria.Contexts
             if (Validarusuario == null)
             {
                  _context.Usuarios.Add(usuario);
-                 foreach (var x in UsuariosAntiguos)
-                 {
-                    Chat chat = new Chat
+                if (UsuariosAntiguos.Count>0)
+                {
+                    foreach (var x in UsuariosAntiguos)
                     {
-                      Nombre = x.Nombre + " - " + usuario.Nombre,
-                      Tipo = false
-                    };
-                    _context.Chats.Add(chat);
-                    UsuarioChat usuarioChat = new UsuarioChat
-                    {
-                        UsuarioID = x.UsuarioID,
-                        Usuario=x,
-                        ChatID = chat.ChatID,
-                        Chat=chat
-                    };
-                    _context.UsuarioChats.Add(usuarioChat);
-                    UsuarioChat usuarioChat2 = new UsuarioChat
-                    {                            
-                        UsuarioID = usuario.UsuarioID,
-                        Usuario=usuario,
-                        ChatID = chat.ChatID,
-                        Chat = chat
-                    };
-                    _context.UsuarioChats.Add(usuarioChat2);
-                 }
+                        Chat chat = new Chat
+                        {
+                            Nombre = x.Nombre + " - " + usuario.Nombre,
+                            Tipo = false
+                        };
+                        _context.Chats.Add(chat);
+                        UsuarioChat usuarioChat = new UsuarioChat
+                        {
+                            UsuarioID = x.UsuarioID,
+                            Usuario = x,
+                            ChatID = chat.ChatID,
+                            Chat = chat
+                        };
+                        _context.UsuarioChats.Add(usuarioChat);
+                        UsuarioChat usuarioChat2 = new UsuarioChat
+                        {
+                            UsuarioID = usuario.UsuarioID,
+                            Usuario = usuario,
+                            ChatID = chat.ChatID,
+                            Chat = chat
+                        };
+                        _context.UsuarioChats.Add(usuarioChat2);
+                    }
+                }
+                 
                  await _context.SaveChangesAsync();
             }
             return Ok();
         }
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteUsuario(int id)
+        [HttpDelete]
+        public async Task<ActionResult> DeleteUsuario()
         {
-            var Validarusuario = await _context.Usuarios.FindAsync(id);
-            if (Validarusuario != null)
+            var usuarios = await _context.Usuarios.ToListAsync();
+            foreach (var x in usuarios)
             {
-                _context.Usuarios.Remove(Validarusuario);
-                await _context.SaveChangesAsync();
+                _context.Usuarios.Remove(x);
+
             }
+            await _context.SaveChangesAsync();
             return Ok();
         }
     }

@@ -54,6 +54,19 @@ namespace WebAppMensajeria.Controllers
             return Ok();
         }
 
+        [HttpDelete]
+        public async Task<ActionResult> DeleteUsuario()
+        {
+            var mensajes = await _context.Mensajes.ToListAsync();
+            foreach (var x in mensajes)
+            {
+                _context.Mensajes.Remove(x);
+
+            }
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
 
     }
 }

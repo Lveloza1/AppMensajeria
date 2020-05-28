@@ -14,13 +14,25 @@
                     iOS="50" />
             </StackLayout.Padding>
 
-            <Picker x:Name="PickerChats"
-                Title="Seleccione un chat"
-                ItemsSource="{Binding chatID}"
-                ItemDisplayBinding="{Binding Chat.Nombre}"
-                SelectedItem="{Binding ChatSeleccionado}"
-                SelectedIndexChanged="ButtonBuscarChat_Clicked"/>
-
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90*"/>
+                    <ColumnDefinition Width="10*"/>
+                </Grid.ColumnDefinitions>
+                <Picker x:Name="PickerChats"
+                    Title="Seleccione un chat"
+                    ItemsSource="{Binding chatID}"
+                    ItemDisplayBinding="{Binding Chat.Nombre}"
+                    SelectedItem="{Binding ChatSeleccionado}"
+                    SelectedIndexChanged="ButtonBuscarChat_Clicked"/>
+                <ImageButton
+                    Grid.Column="1"
+                    Source="compartir.png"
+                    BackgroundColor="WhiteSmoke"/>
+            </Grid>
             <ListView x:Name="ListMensajes"
                       HasUnevenRows="True"
                       SeparatorVisibility="None"
@@ -38,23 +50,22 @@
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto"
-                                                           />
+                                            <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
                                         <Label FontAttributes="Bold"
                                                Text="{Binding UsuarioChat.Usuario.Nombre}"
                                                Grid.ColumnSpan="2"/>
-
                                         <Label Grid.Row="1"
                                                Grid.ColumnSpan="2"
                                                TextColor="Black"
                                                Text="{Binding Contenido}" />
-
+                                        <Image Grid.Row="1"
+                                               Grid.ColumnSpan="2"                                               
+                                               Source="{Binding Path=Imagen}" />
                                         <Label Grid.Row="2"
                                                Grid.Column="0"
                                                TextColor="#308330"
                                                Text="...ok" />
-
                                         <Label Grid.Row="2"
                                                Grid.Column="1"   
                                                TextColor="#a9a9a9"
@@ -79,12 +90,12 @@
                              Source="adjuntar.png"
                              Clicked="ButtonSelectPicEnviar_Clicked"
                              Grid.Column="1"
-                             BackgroundColor="White"/>
+                             BackgroundColor="WhiteSmoke"/>
                 <ImageButton x:Name="ButtonEnviar"
                              Source="enviar.png"
                              Clicked="EnviarMensaje_Clicked"
                              Grid.Column="2"
-                             BackgroundColor="White"/>
+                             BackgroundColor="WhiteSmoke"/>
             </Grid>
 
             

@@ -10,16 +10,16 @@ namespace AppMensajeria.Models
 
         [Key]
         [Column("UsuarioID")]
-        public int Mi_UsuarioID { get; set; }
+        public int MiUsuarioID { get; set; }
         [Column("Imagen", TypeName = "BLOB")]
-        public string Mi_Imagen { get; set; }
+        public string MiImagen { get; set; }
         [Required]
         [Column("Nombre")]
         [StringLength(255)]
-        public string Mi_Nombre { get; set; }
+        public string MiNombre { get; set; }
         [Required]
         [Column("Telefono")]
-        public string Mi_Telefono { get; set; }
+        public string MiTelefono { get; set; }
         
     }
 }

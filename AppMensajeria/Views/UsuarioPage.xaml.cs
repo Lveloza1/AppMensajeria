@@ -13,10 +13,33 @@ namespace AppMensajeria.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class UsuarioPage : ContentPage
     {
+        PerfilService perfilService;
         public UsuarioPage()
         {
             InitializeComponent();
-            
+            perfilService = new PerfilService();
+            Perfil this_usuario = perfilService.ObtenerPerfil();
+            if (this_usuario == null)
+            {
+                EntryNombre.Text = "";
+                EntryTelefono.Text = "";
+                EntryNombre.IsEnabled = true;
+                EntryTelefono.IsEnabled = true;
+                ButtonSelectPic.IsVisible = true;
+                formBuscarUsuario.IsVisible = true;
+                ButtonRegistrar.IsVisible = true;
+            }
+            else
+            {
+                EntryNombre.Text = this_usuario.MiNombre;
+                EntryTelefono.Text = this_usuario.MiTelefono;
+                ImageView.Source = Base64ToImage(this_usuario.MiImagen);
+                EntryNombre.IsEnabled = false;
+                EntryTelefono.IsEnabled = false;
+                ButtonSelectPic.IsVisible = false;
+                formBuscarUsuario.IsVisible = false;
+                ButtonRegistrar.IsVisible = false;
+            }
         }
 
         protected async override void OnAppearing()
@@ -74,7 +97,7 @@ namespace AppMensajeria.Views
 
                         await service.CrearUsuarioApi(usuario);
                         PerfilService perfilService = new PerfilService();
-                        perfilService.CrearPerfil(await service.ObtenerUsuarioTelefonoApi(usuario.Telefono));
+                        perfilService.CrearPerfil(await service.ObtenerUsuarioTelefonoApi(usuario.Telefono)); //Hay que traerse lo sin buscar por teléfono
                         await DisplayAlert("Exito", "Su perfil ha sido almacenado.", "Aceptar");                        
                         ButtonSelectPic.IsVisible = false;
                         EntryNombre.IsEnabled = false;
@@ -115,6 +138,8 @@ namespace AppMensajeria.Views
                         var this_usuario = await service.ObtenerUsuarioTelefonoApi(telefono);
                         if (this_usuario != null)
                         {
+                            PerfilService perfilService = new PerfilService();
+                            perfilService.CrearPerfil(await service.ObtenerUsuarioTelefonoApi(telefono));
                             EntryNombre.Text = this_usuario.Nombre;
                             EntryTelefono.Text = (this_usuario.Telefono).ToString();
                             ImageView.Source = Base64ToImage(this_usuario.Imagen);

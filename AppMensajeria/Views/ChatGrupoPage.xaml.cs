@@ -31,7 +31,7 @@ namespace AppMensajeria.Views
             base.OnAppearing();
             var this_usuario= perfilService.ObtenerPerfil();
 
-            Grupos = await usuariochatService.ObtenerGruposDelUsuarioApi(this_usuario.Mi_UsuarioID);
+            Grupos = await usuariochatService.ObtenerGruposDelUsuarioApi(this_usuario.MiUsuarioID);
             var current = Connectivity.NetworkAccess;
 
             if (current == NetworkAccess.Internet)
@@ -43,7 +43,7 @@ namespace AppMensajeria.Views
                 Usuarios = usuarioService.ObtenerUsuarios();
             }          
             PickerUsuario.ItemsSource = Usuarios;
-            Grupos = await usuariochatService.ObtenerGruposDelUsuarioApi(this_usuario.Mi_UsuarioID);
+            Grupos = await usuariochatService.ObtenerGruposDelUsuarioApi(this_usuario.MiUsuarioID);
             PickerGrupo.ItemsSource = Grupos;
         }
         private async void ButtonCrearGrupo_Clicked(object sender, EventArgs e)
@@ -63,15 +63,14 @@ namespace AppMensajeria.Views
                         Tipo = true
                     };
                     ChatService service = new ChatService();
-                    PerfilService perfilservice = new PerfilService();
-                    var perfil = perfilservice.ObtenerPerfil();
+                    var perfil = perfilService.ObtenerPerfil();
 
                     var chatNuevo = await service.CrearChatApi(chat);
 
 
                     UsuarioChat usuariochat = new UsuarioChat
                     {
-                        UsuarioID = perfil.Mi_UsuarioID,
+                        UsuarioID = perfil.MiUsuarioID,
                         ChatID = chatNuevo.ChatID
                     };
                     UsuarioChatService service2 = new UsuarioChatService();
