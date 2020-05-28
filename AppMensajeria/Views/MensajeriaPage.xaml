@@ -31,55 +31,34 @@
                         <ViewCell>
                             <Frame CornerRadius="20"
                                    HasShadow="True"
-                                   Margin="3">
+                                   Margin="3"
+                                   BorderColor="#b3c9ff">
                                 <StackLayout Orientation="Vertical">
                                     <Grid VerticalOptions="CenterAndExpand">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto"
+                                                           />
                                         </Grid.RowDefinitions>
-
-                                        <Label Grid.Column="0"
-                                               Text="Usuario: "
-                                               FontAttributes="Bold" />
-
-                                        <Label Grid.Column="1"
-                                               Text="{Binding UsuarioChat.Usuario.Nombre}" />
+                                        <Label FontAttributes="Bold"
+                                               Text="{Binding UsuarioChat.Usuario.Nombre}"
+                                               Grid.ColumnSpan="2"/>
 
                                         <Label Grid.Row="1"
-                                               Grid.Column="0"
-                                               Text="Contenido: "
-                                               FontAttributes="Bold" />
-                                        
-                                        <Label x:Name="LabelContenido"
-                                               Grid.Row="1"
-                                               Grid.Column="1"
+                                               Grid.ColumnSpan="2"
+                                               TextColor="Black"
                                                Text="{Binding Contenido}" />
 
                                         <Label Grid.Row="2"
                                                Grid.Column="0"
-                                               Text="Date: "
-                                               FontAttributes="Bold" />
+                                               TextColor="#308330"
+                                               Text="...ok" />
 
                                         <Label Grid.Row="2"
-                                               Grid.Column="1"
+                                               Grid.Column="1"   
+                                               TextColor="#a9a9a9"
                                                Text="{Binding InfoDate}" />
-
-                                        <Label Grid.Row="3"
-                                               Grid.Column="0"
-                                               Text="Estado: "
-                                               FontAttributes="Bold" />
-
-                                        <Label Grid.Row="3"
-                                               Grid.Column="1"
-                                               Text="{Binding Estado}" />
                                     </Grid>
                                 </StackLayout>
                             </Frame>
@@ -87,9 +66,6 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-
-            <Image x:Name="ImageEnviar" HeightRequest="30" WidthRequest="30"/>
-
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="80*"/>

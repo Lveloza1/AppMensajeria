@@ -103,6 +103,22 @@ namespace AppMensajeria.Services
                 throw;
             }
         }
+        //llenar usuarios
+        public void DBLocalUsuario(ObservableCollection<Usuario> usuarios)
+        {
+            var usuariosnuevos = usuarios.ToList();
+            foreach (var x in usuariosnuevos)
+            {
+                Usuario validarusuario = _context.Usuarios.Find(x.UsuarioID);
+
+                if (validarusuario == null)
+                {
+                    _context.Usuarios.Add(x);
+                }
+            }
+            _context.SaveChanges();
+
+        }
 
     }
 }

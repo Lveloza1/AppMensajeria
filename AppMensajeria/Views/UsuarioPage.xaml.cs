@@ -16,6 +16,13 @@ namespace AppMensajeria.Views
         public UsuarioPage()
         {
             InitializeComponent();
+            
+        }
+
+        protected async override void OnAppearing()
+        {
+            UsuarioService service = new UsuarioService();
+            service.DBLocalUsuario(await service.ObtenerUsuariosApi());
         }
         private MediaFile file;
 
@@ -64,10 +71,11 @@ namespace AppMensajeria.Views
 
                     if (current == NetworkAccess.Internet) 
                     {
+
                         await service.CrearUsuarioApi(usuario);
                         PerfilService perfilService = new PerfilService();
                         perfilService.CrearPerfil(await service.ObtenerUsuarioTelefonoApi(usuario.Telefono));
-                        await DisplayAlert("Exito", "Su perfil ha sido almacenado.", "Aceptar");
+                        await DisplayAlert("Exito", "Su perfil ha sido almacenado.", "Aceptar");                        
                         ButtonSelectPic.IsVisible = false;
                         EntryNombre.IsEnabled = false;
                         EntryTelefono.IsEnabled = false;

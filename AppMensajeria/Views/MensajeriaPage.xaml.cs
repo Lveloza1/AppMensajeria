@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Linq;
 using Xamarin.Essentials;
+using System.Threading.Tasks;
 
 namespace AppMensajeria.Views
 {
@@ -24,8 +25,6 @@ namespace AppMensajeria.Views
             InitializeComponent();
             service = new UsuarioChatService();
             mensajeService = new MensajeService();
-            ImageEnviar.IsVisible = false;
-
         }
         protected async override void OnAppearing()
         {
@@ -60,12 +59,13 @@ namespace AppMensajeria.Views
                             UsuarioChatID = usuarioChat.UsuarioChatID,
                             Contenido = EntryMensaje.Text,        
                             //imagen = cuando la tengamos
-                            InfoDate = DateTime.Now.ToString(),
+                            InfoDate = DateTime.Now.ToString("hh:mm tt '-' dd/MM"),
                             Estado = true
                         };
                         UsuarioService service = new UsuarioService();
 
                         await mensajeService.EnviarMensajeApi(mensaje);
+                        await llenarListaUsuario();
 
                         EntryMensaje.Text= "";
 
@@ -99,9 +99,6 @@ namespace AppMensajeria.Views
                 });
                 if (file == null) return;
             }
-            ImageEnviar.Source = ImageSource.FromStream(() => file.GetStream());
-            ImageEnviar.IsVisible = true;
-
         }
 
         private async void ButtonBuscarChat_Clicked(object sender, EventArgs e)
@@ -109,7 +106,8 @@ namespace AppMensajeria.Views
             var picker = sender as Picker;
             var chat = UsuarioChats[picker.SelectedIndex];
             var mensajes = await mensajeService.ObtenerMensajesDelChatApi(chat.ChatID);
-            ListMensajes.ItemsSource = mensajes;
+            var Ordenarmensajes = mensajes.OrderBy(x => x.InfoDate);
+            ListMensajes.ItemsSource = Ordenarmensajes.ToObservableCollection();
         }
 
 
@@ -117,17 +115,15 @@ namespace AppMensajeria.Views
         {
             var menuItem = sender as ListView;
             var mensaje = menuItem.SelectedItem as Mensaje;
+            await TextToSpeech.SpeakAsync(mensaje.Contenido);
+        }
 
-            var locales = await TextToSpeech.GetLocalesAsync();
-            var locale = locales.FirstOrDefault();
-            var settings = new SpeechOptions()
-            {
-                Volume = .75f,
-                Pitch = 1.0f,
-                Locale = locale
-            };
-
-            await TextToSpeech.SpeakAsync(mensaje.Contenido, settings);
+        public async Task llenarListaUsuario()
+        {
+            var chat = UsuarioChats[PickerChats.SelectedIndex];
+            var mensajes = await mensajeService.ObtenerMensajesDelChatApi(chat.ChatID);
+            var Ordenarmensajes = mensajes.OrderBy(x => x.InfoDate);
+            ListMensajes.ItemsSource = Ordenarmensajes.ToObservableCollection();
         }
     }
 }

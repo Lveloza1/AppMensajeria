@@ -49,7 +49,7 @@ namespace AppMensajeria.Services
             return Chats;
         }
         //Crear Chat (Grupos)
-        public async Task CrearChatApi(Chat chat)
+        public async Task<Chat> CrearChatApi(Chat chat)
         {
             try
             {
@@ -62,11 +62,17 @@ namespace AppMensajeria.Services
                 {
                     throw new Exception(response.StatusCode.ToString());
                 }
+                else
+                {
+                    var bodody = await response.Content.ReadAsStringAsync();
+                    chat = JsonConvert.DeserializeObject<Chat>(bodody);
+                }
             }
             catch (Exception)
             {
                 throw;
             }
+            return chat;
         }
         //Obtiene lista de chat
         public async Task<ObservableCollection<Chat>> ObtenerChatsApi()

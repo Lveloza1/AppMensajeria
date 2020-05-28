@@ -38,7 +38,7 @@ namespace WebAppMensajeria.Controllers
             _context.Chats.Add(chat);
             await _context.SaveChangesAsync();
 
-            return chat;
+            return Ok(chat);
         }
 
         [HttpDelete("{id}")]
