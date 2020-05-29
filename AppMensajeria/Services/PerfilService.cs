@@ -16,7 +16,7 @@ namespace AppMensajeria.Services
         }
         public Perfil ObtenerPerfil()
         {
-            return _context.Perfiles.Where(e=> e.MiUsuarioID != null ).FirstOrDefault();;
+            return _context.Perfiles.FirstOrDefault();
         }
         public void CrearPerfil(Usuario usuario)
         {

@@ -14,41 +14,46 @@ namespace AppMensajeria.Views
     public partial class UsuarioPage : ContentPage
     {
         PerfilService perfilService;
+        private MediaFile file;
         public UsuarioPage()
         {
             InitializeComponent();
             perfilService = new PerfilService();
-            Perfil this_usuario = perfilService.ObtenerPerfil();
-            if (this_usuario == null)
-            {
-                EntryNombre.Text = "";
-                EntryTelefono.Text = "";
-                EntryNombre.IsEnabled = true;
-                EntryTelefono.IsEnabled = true;
-                ButtonSelectPic.IsVisible = true;
-                formBuscarUsuario.IsVisible = true;
-                ButtonRegistrar.IsVisible = true;
-            }
-            else
-            {
-                EntryNombre.Text = this_usuario.MiNombre;
-                EntryTelefono.Text = this_usuario.MiTelefono;
-                ImageView.Source = Base64ToImage(this_usuario.MiImagen);
-                EntryNombre.IsEnabled = false;
-                EntryTelefono.IsEnabled = false;
-                ButtonSelectPic.IsVisible = false;
-                formBuscarUsuario.IsVisible = false;
-                ButtonRegistrar.IsVisible = false;
-            }
         }
 
         protected async override void OnAppearing()
         {
             UsuarioService service = new UsuarioService();
             service.DBLocalUsuario(await service.ObtenerUsuariosApi());
-        }
-        private MediaFile file;
 
+            Perfil this_usuario = perfilService.ObtenerPerfil();
+            if (this_usuario == null)
+            {
+                formBuscarUsuario.IsVisible = true;
+                ImageView.Source = "noimage.png";
+                ButtonSelectPic.IsVisible = true;
+                EntryNombre.IsEnabled = true;
+                EntryTelefono.IsEnabled = true;
+                EntryNombre.Text = "";
+                EntryTelefono.Text = "";
+                ButtonRegistrar.IsVisible = true;
+                ButtonCerrarSesion.IsVisible = false;
+            }
+            else
+            {
+                formBuscarUsuario.IsVisible = false;
+                ImageView.Source = Base64ToImage(this_usuario.MiImagen);
+                ButtonSelectPic.IsVisible = false;
+                EntryNombre.IsEnabled = false;
+                EntryTelefono.IsEnabled = false;
+                EntryNombre.Text = this_usuario.MiNombre;
+                EntryTelefono.Text = this_usuario.MiTelefono;
+                ButtonRegistrar.IsVisible = false;
+                ButtonCerrarSesion.IsVisible = true;
+
+            }
+        }
+        
         private async void ButtonSelectPic_Clicked(object sender, EventArgs e)
         {
             await CrossMedia.Current.Initialize();
@@ -104,6 +109,7 @@ namespace AppMensajeria.Views
                         EntryTelefono.IsEnabled = false;
                         ButtonRegistrar.IsVisible = false;
                         formBuscarUsuario.IsVisible = false;
+                        ButtonCerrarSesion.IsVisible = true;
                     }
                     else
                     {
@@ -149,6 +155,8 @@ namespace AppMensajeria.Views
                             ButtonSelectPic.IsVisible = false;
                             formBuscarUsuario.IsVisible = false;
                             ButtonRegistrar.IsVisible = false;
+                            ButtonCerrarSesion.IsVisible = true;
+
 
                         }
                         else
@@ -167,6 +175,17 @@ namespace AppMensajeria.Views
                 {
                     await DisplayAlert("Error", "Ocurrio el siguiente error: " + ex.Message, "Aceptar");
                 }
+            }
+        }
+
+        private async void ButtonCerrarSesion_Clicked(object sender, EventArgs e)
+        {
+            bool answer = await DisplayAlert("Cerrar sesión", "¿Seguro que desea cerrar sesión?", "Yes", "No");
+            if (answer)
+            {
+                Perfil this_usuario = perfilService.ObtenerPerfil();
+                perfilService.BorrarPerfil(this_usuario);
+                this.OnAppearing();
             }
         }
 

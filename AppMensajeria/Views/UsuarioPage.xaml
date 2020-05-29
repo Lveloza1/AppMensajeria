@@ -42,6 +42,10 @@
             <Button x:Name="ButtonRegistrar"
                     Text="Registrarme"
                     Clicked="ButtonRegistrar_Clicked"/>
+            <Button x:Name="ButtonCerrarSesion"
+                    Text="Cerrar sesión"
+                    BackgroundColor="OrangeRed"
+                    Clicked="ButtonCerrarSesion_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

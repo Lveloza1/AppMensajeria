@@ -23,8 +23,8 @@ namespace AppMensajeria.Views
                 new HomeMenuItem {Id = MenuItemType.Perfil, Title="Perfil" },
                 new HomeMenuItem {Id = MenuItemType.Mensajeria, Title="Mensajeria" },
                 new HomeMenuItem {Id = MenuItemType.Grupos, Title="Crear Grupos" },
+                //new HomeMenuItem {Id = MenuItemType.Usuarios, Title="Lista de usuarios" },
                 new HomeMenuItem {Id = MenuItemType.About, Title="Acerca de" },
-                //new HomeMenuItem {Id = MenuItemType.LogOut, Title="Cerrar sesión" },
 
             };
 

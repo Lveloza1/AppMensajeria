@@ -6,7 +6,6 @@ using System;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System.Linq;
 using Xamarin.Essentials;
 using System.Threading.Tasks;
 using System.IO;
@@ -20,22 +19,23 @@ namespace AppMensajeria.Views
         private readonly UsuarioChatService service;
         private readonly MensajeService mensajeService;
         private readonly PerfilService perfilService;
-        private readonly Perfil this_usuario;
+        private Perfil this_usuario;
         public Chat ChatSeleccionado { get; set; }
         private MediaFile file;
         public MensajeriaPage()
         {
             InitializeComponent();
             perfilService = new PerfilService();
-            this_usuario = perfilService.ObtenerPerfil();
             service = new UsuarioChatService();
             mensajeService = new MensajeService();
         }
         protected async override void OnAppearing()
         {
             base.OnAppearing();
+            this_usuario = perfilService.ObtenerPerfil();
             UsuarioChats = await service.ObtenerChatDelUsuarioApi(this_usuario.MiUsuarioID);
             PickerChats.ItemsSource = UsuarioChats;
+            ButtonCompartir.IsEnabled = false;
 
         }
 
@@ -62,7 +62,7 @@ namespace AppMensajeria.Views
         private async void EnviarMensaje_Clicked(object sender, EventArgs e)
         {
 
-            if (EntryMensaje.Text == null || file == null)
+            if (EntryMensaje.Text == null)
             {
                 await DisplayAlert("Error", "El mensaje no tiene contenido", "Aceptar");
             }
@@ -104,16 +104,17 @@ namespace AppMensajeria.Views
         private async void ButtonBuscarChat_Clicked(object sender, EventArgs e)
         {
             var picker = sender as Picker;
-            if(picker.SelectedIndex >= 0)
+            if (picker.SelectedIndex >= 0)
             {
                 var chat = UsuarioChats[picker.SelectedIndex];
                 var mensajes = await mensajeService.ObtenerMensajesDelChatApi(chat.ChatID);
-                var Ordenarmensajes = mensajes.OrderBy(x => x.InfoDate);
-                ListMensajes.ItemsSource = Ordenarmensajes.ToObservableCollection();
+                ListMensajes.ItemsSource = mensajes.ToObservableCollection();
+                ButtonCompartir.IsEnabled = true;
             }
             else
             {
                 ListMensajes.ItemsSource = null;
+                ButtonCompartir.IsEnabled = false;
             }
         }
 
@@ -129,8 +130,7 @@ namespace AppMensajeria.Views
         {
             var chat = UsuarioChats[PickerChats.SelectedIndex];
             var mensajes = await mensajeService.ObtenerMensajesDelChatApi(chat.ChatID);
-            var Ordenarmensajes = mensajes.OrderBy(x => x.InfoDate);
-            ListMensajes.ItemsSource = Ordenarmensajes.ToObservableCollection();
+            ListMensajes.ItemsSource = mensajes.ToObservableCollection();
         }
 
         public string ImageToBase64(MediaFile file)
@@ -152,5 +152,26 @@ namespace AppMensajeria.Views
             return pic;
 
         }
+
+        private async void ButtonCompartir_Clicked(object sender, EventArgs e)
+        {         
+            var chat = UsuarioChats[PickerChats.SelectedIndex];
+
+            var mensajes = await mensajeService.ObtenerMensajesDelChatApi(chat.ChatID);
+            string conversacion = chat.Chat.Nombre + "\n\n";
+
+            foreach (var m in mensajes)
+            {
+                conversacion += m.UsuarioChat.Usuario.Nombre + ": " + m.Contenido + " ("+ m.InfoDate +")" +"\n";
+            }
+
+            await Share.RequestAsync(new ShareTextRequest
+            {
+                Text = conversacion,
+                Title = "Chat: " + chat.Chat.Nombre
+            });
+
+        }
+
     }
 }

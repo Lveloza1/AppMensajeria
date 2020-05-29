@@ -29,9 +29,11 @@
                     SelectedItem="{Binding ChatSeleccionado}"
                     SelectedIndexChanged="ButtonBuscarChat_Clicked"/>
                 <ImageButton
+                    x:Name="ButtonCompartir"
                     Grid.Column="1"
                     Source="compartir.png"
-                    BackgroundColor="WhiteSmoke"/>
+                    BackgroundColor="WhiteSmoke"
+                    Clicked="ButtonCompartir_Clicked"/>
             </Grid>
             <ListView x:Name="ListMensajes"
                       HasUnevenRows="True"
@@ -61,7 +63,7 @@
                                                Text="{Binding Contenido}" />
                                         <Image Grid.Row="1"
                                                Grid.ColumnSpan="2"                                               
-                                               Source="{Binding Path=Imagen}" />
+                                               Source="{Binding Imagen}" />
                                         <Label Grid.Row="2"
                                                Grid.Column="0"
                                                TextColor="#308330"
@@ -97,8 +99,6 @@
                              Grid.Column="2"
                              BackgroundColor="WhiteSmoke"/>
             </Grid>
-
-            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

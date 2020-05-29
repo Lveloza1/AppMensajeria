@@ -5,8 +5,8 @@
         Perfil,
         Mensajeria,   
         Grupos,
+        //Usuarios,
         About,
-        //LogOut
     }
     public class HomeMenuItem
     {

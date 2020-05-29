@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="AppMensajeria.Views.ListaUsuariosPage">
+    <ContentPage.Content>
+        <StackLayout>
+        <StackLayout.Padding>
+            <OnPlatform
+                    x:TypeArguments="Thickness"
+                    Android="20"
+                    iOS="50" />
+        </StackLayout.Padding>
+        <ListView x:Name="ListUsuarios"
+                      HasUnevenRows="True"
+                      SeparatorVisibility="None"
+                      SelectionMode="Single">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame CornerRadius="20"
+                                   HasShadow="True"
+                                   Margin="3"
+                                   BorderColor="#b3c9ff">
+                            <StackLayout Orientation="Vertical">
+                                <Grid VerticalOptions="CenterAndExpand">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Label FontAttributes="Bold"
+                                               Text="{Binding Nombre}"/>
+                                    <Label Grid.Row="1"
+                                               TextColor="Black"
+                                               Text="{Binding Telefono}" />
+                                    <Image Grid.Row="2"                                          
+                                               Source ="{Binding Imagen}" />
+                                </Grid>
+                            </StackLayout>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
