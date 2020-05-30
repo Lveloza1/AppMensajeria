@@ -43,6 +43,20 @@ namespace WebAppMensajeria.Controllers
             return Mensaje;
         }
 
+        //GET: api/Mensaje/5
+        [HttpGet("Usuario/{id}")]
+        public async Task<ActionResult<IEnumerable<Mensaje>>> GetMensajesUsuario(int id)
+        {
+            var Mensaje = await _context.Mensajes.Include(x => x.UsuarioChat).Include(x => x.UsuarioChat.Usuario).Include(x => x.UsuarioChat.Chat).Where(x => x.UsuarioChat.UsuarioID == id).ToListAsync();
+
+            if (Mensaje == null)
+            {
+                return NotFound();
+            }
+
+            return Mensaje;
+        }
+
         // POST: api/Mensajes
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

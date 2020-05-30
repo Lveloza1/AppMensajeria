@@ -9,6 +9,7 @@ using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
 using System.Threading.Tasks;
 using System.IO;
+using System.Linq;
 
 namespace AppMensajeria.Views
 {
@@ -36,11 +37,13 @@ namespace AppMensajeria.Views
             UsuarioChats = await service.ObtenerChatDelUsuarioApi(this_usuario.MiUsuarioID);
             PickerChats.ItemsSource = UsuarioChats;
             ButtonCompartir.IsEnabled = false;
+            RefrescarMensajes();
 
         }
 
         private async void ButtonSelectPicEnviar_Clicked(object sender, EventArgs e)
         {
+            
             await CrossMedia.Current.Initialize();
             if (!CrossMedia.Current.IsPickPhotoSupported)
             {
@@ -87,7 +90,7 @@ namespace AppMensajeria.Views
                         UsuarioService service = new UsuarioService();
 
                         await mensajeService.EnviarMensajeApi(mensaje);
-                        await llenarListaUsuario();
+                        //await llenarListaUsuario();
 
                         EntryMensaje.Text= "";
 
@@ -129,7 +132,7 @@ namespace AppMensajeria.Views
         public async Task llenarListaUsuario()
         {
             var chat = UsuarioChats[PickerChats.SelectedIndex];
-            var mensajes = await mensajeService.ObtenerMensajesDelChatApi(chat.ChatID);
+            var mensajes = await mensajeService.ObtenerMensajesDelChatApi(chat.ChatID);       
             ListMensajes.ItemsSource = mensajes.ToObservableCollection();
         }
 
@@ -169,6 +172,28 @@ namespace AppMensajeria.Views
             {
                 Text = conversacion,
                 Title = "Chat: " + chat.Chat.Nombre
+            });
+
+        }
+
+        private async void RefrescarMensajes()
+        {
+            var Mensajes = await mensajeService.ObtenerMensajesDelUsuarioApi(this_usuario.MiUsuarioID);
+            var mensajestemp = new ObservableCollection<Mensaje>();
+            Task.Factory.StartNew(async() =>
+            {             
+                while (true)
+                {
+                    mensajestemp = await mensajeService.ObtenerMensajesDelUsuarioApi(this_usuario.MiUsuarioID);
+                    if (Mensajes.Count() < mensajestemp.Count())
+                    {
+                        MainThread.BeginInvokeOnMainThread(async () =>
+                        {
+                            await llenarListaUsuario();
+                        });
+                        Task.Delay(1000);
+                    }
+                }
             });
 
         }

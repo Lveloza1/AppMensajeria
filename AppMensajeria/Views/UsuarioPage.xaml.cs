@@ -22,10 +22,7 @@ namespace AppMensajeria.Views
         }
 
         protected async override void OnAppearing()
-        {
-            UsuarioService service = new UsuarioService();
-            service.DBLocalUsuario(await service.ObtenerUsuariosApi());
-
+        {            
             Perfil this_usuario = perfilService.ObtenerPerfil();
             if (this_usuario == null)
             {
@@ -52,8 +49,11 @@ namespace AppMensajeria.Views
                 ButtonCerrarSesion.IsVisible = true;
 
             }
+            UsuarioService service = new UsuarioService();
+            service.DBLocalUsuario(await service.ObtenerUsuariosApi());
+
         }
-        
+
         private async void ButtonSelectPic_Clicked(object sender, EventArgs e)
         {
             await CrossMedia.Current.Initialize();
@@ -100,9 +100,9 @@ namespace AppMensajeria.Views
                     if (current == NetworkAccess.Internet) 
                     {
 
-                        await service.CrearUsuarioApi(usuario);
+                        usuario = await service.CrearUsuarioApi(usuario);
                         PerfilService perfilService = new PerfilService();
-                        perfilService.CrearPerfil(await service.ObtenerUsuarioTelefonoApi(usuario.Telefono)); //Hay que traerse lo sin buscar por teléfono
+                        perfilService.CrearPerfil(usuario);
                         await DisplayAlert("Exito", "Su perfil ha sido almacenado.", "Aceptar");                        
                         ButtonSelectPic.IsVisible = false;
                         EntryNombre.IsEnabled = false;

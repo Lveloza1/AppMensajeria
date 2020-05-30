@@ -5,7 +5,7 @@
         Perfil,
         Mensajeria,   
         Grupos,
-        //Usuarios,
+        Usuarios,
         About,
     }
     public class HomeMenuItem

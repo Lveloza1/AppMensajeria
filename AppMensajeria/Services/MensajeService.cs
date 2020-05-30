@@ -59,6 +59,28 @@ namespace AppMensajeria.Services
             return Mensajes.OrderBy(x => x.InfoDate).ToObservableCollection();
         }
 
+        public async Task<ObservableCollection<Mensaje>> ObtenerMensajesDelUsuarioApi(int id)
+        {
+            List<Mensaje> Mensajes = new List<Mensaje>();
+            try
+            {
+                Uri uri = new Uri(string.Format(MensajeAPI + "/Usuario/" + id, string.Empty));
+                HttpClient client = new HttpClient();
+                var response = await client.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var contenido = await response.Content.ReadAsStringAsync();
+                    Mensajes = JsonConvert.DeserializeObject<List<Mensaje>>(contenido);
+                }
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return Mensajes.ToObservableCollection();
+        }
+
         //Enviar mensaje
         public async Task EnviarMensajeApi(Mensaje mensaje)
         {

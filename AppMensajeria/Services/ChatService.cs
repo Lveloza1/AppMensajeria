@@ -64,8 +64,8 @@ namespace AppMensajeria.Services
                 }
                 else
                 {
-                    var bodody = await response.Content.ReadAsStringAsync();
-                    chat = JsonConvert.DeserializeObject<Chat>(bodody);
+                    var body = await response.Content.ReadAsStringAsync();
+                    chat = JsonConvert.DeserializeObject<Chat>(body);
                 }
             }
             catch (Exception)

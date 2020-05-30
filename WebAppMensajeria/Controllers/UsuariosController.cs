@@ -77,7 +77,7 @@ namespace WebAppMensajeria.Contexts
                  
                  await _context.SaveChangesAsync();
             }
-            return Ok();
+            return Ok(usuario);
         }
         [HttpDelete]
         public async Task<ActionResult> DeleteUsuario()

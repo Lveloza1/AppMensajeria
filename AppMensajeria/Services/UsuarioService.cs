@@ -84,7 +84,7 @@ namespace AppMensajeria.Services
             return usuario;
         }
         //Crea usuario nuevo y chat privados
-        public async Task CrearUsuarioApi(Usuario usuario)
+        public async Task<Usuario> CrearUsuarioApi(Usuario usuario)
         {
             try
             {
@@ -97,11 +97,17 @@ namespace AppMensajeria.Services
                 {
                     throw new Exception(response.StatusCode.ToString());
                 }
+                else
+                {
+                    var body = await response.Content.ReadAsStringAsync();
+                    usuario = JsonConvert.DeserializeObject<Usuario>(body);
+                }
             }
             catch (Exception)
             {
                 throw;
             }
+            return usuario;
         }
         //llenar usuarios
         public void DBLocalUsuario(ObservableCollection<Usuario> usuarios)

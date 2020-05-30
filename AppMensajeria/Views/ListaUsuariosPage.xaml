@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:AppMensajeria.Views"
              mc:Ignorable="d"
              x:Class="AppMensajeria.Views.ListaUsuariosPage">
     <ContentPage.Content>
@@ -16,7 +16,8 @@
         <ListView x:Name="ListUsuarios"
                       HasUnevenRows="True"
                       SeparatorVisibility="None"
-                      SelectionMode="Single">
+                      SelectionMode="Single"
+                      ItemSelected="ItemLlamar_Clicked">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -32,13 +33,13 @@
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
                                     <Label FontAttributes="Bold"
-                                               Text="{Binding Nombre}"/>
+                                           Text="{Binding Nombre}"/>
                                     <Label Grid.Row="1"
-                                               TextColor="Black"
-                                               Text="{Binding Telefono}" />
+                                           TextColor="Black"
+                                           Text="{Binding Telefono}" />
                                     <Image Grid.Row="2"                                          
-                                               Source ="{Binding Imagen}" />
-                                </Grid>
+                                           Source ="{Binding Imagen}" />
+                                    </Grid>
                             </StackLayout>
                         </Frame>
                     </ViewCell>

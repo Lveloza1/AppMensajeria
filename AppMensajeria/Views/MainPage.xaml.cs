@@ -40,9 +40,9 @@ namespace AppMensajeria.Views
                     case (int)MenuItemType.Grupos:
                         MenuPages.Add(id, new NavigationPage(new ChatGrupoPage()));
                         break;
-                    //case (int)MenuItemType.Usuarios:
-                    //    MenuPages.Add(id, new NavigationPage(new ListaUsuariosPage()));
-                    //    break;
+                    case (int)MenuItemType.Usuarios:
+                        MenuPages.Add(id, new NavigationPage(new ListaUsuariosPage()));
+                        break;
                     case (int)MenuItemType.About:
                         MenuPages.Add(id, new NavigationPage(new AboutPage()));
                         break;

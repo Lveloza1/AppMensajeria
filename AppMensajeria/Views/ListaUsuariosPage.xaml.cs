@@ -4,10 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,26 +17,26 @@ namespace AppMensajeria.Views
         private readonly UsuarioService service;
         public ListaUsuariosPage()
         {
+            InitializeComponent();
             service = new UsuarioService();
         }
 
         protected async override void OnAppearing()
         {
-            //base.OnAppearing();
-            //List<UsuarioImagen> usuarioImagens = new List<UsuarioImagen>();
-            //Usuarios = await service.ObtenerUsuariosApi();
-            //foreach (var x in Usuarios)
-            //{
-            //    UsuarioImagen usuario = new UsuarioImagen
-            //    {
-            //        Nombre = x.Nombre,
-            //        Telefono = x.Telefono,
-            //        Imagen = Base64ToImage(x.Imagen)
-            //    };
-            //    usuarioImagens.Add(usuario);
-            //}
-            //ListUsuarios.ItemsSource= usuarioImagens.ToArray();
-
+            base.OnAppearing();
+            List<UsuarioImagen> usuarioImagens = new List<UsuarioImagen>();
+            Usuarios = await service.ObtenerUsuariosApi();
+            foreach (var x in Usuarios)
+            {
+                UsuarioImagen usuario = new UsuarioImagen
+                {
+                    Nombre = x.Nombre,
+                    Telefono = x.Telefono,
+                    Imagen = Base64ToImage(x.Imagen)
+                };
+                usuarioImagens.Add(usuario);
+            }
+            ListUsuarios.ItemsSource = usuarioImagens.ToObservableCollection();
         }
         public ImageSource Base64ToImage(string imagestr)
         {
@@ -52,6 +49,20 @@ namespace AppMensajeria.Views
             }
             return pic;
 
+        }
+
+        private async void ItemLlamar_Clicked(object sender, EventArgs e)
+        {
+            var menuItem = sender as ListView;
+            var usuario = menuItem.SelectedItem as UsuarioImagen;
+            try
+            {
+                PhoneDialer.Open(usuario.Telefono);
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", "Ocurrio el siguiente error: " + ex.Message, "Ok");
+            }
         }
 
     }
