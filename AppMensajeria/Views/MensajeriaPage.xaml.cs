@@ -94,6 +94,7 @@ namespace AppMensajeria.Views
                         await llenarListaMensajes();
 
                         EntryMensaje.Text= "";
+                        file = null;
 
                     }
 
@@ -110,7 +111,7 @@ namespace AppMensajeria.Views
             var picker = sender as Picker;
             if (picker.SelectedIndex >= 0)
             {
-                llenarListaMensajes();
+                await llenarListaMensajes();
                 ButtonCompartir.IsEnabled = true;
             }
             else
@@ -124,8 +125,16 @@ namespace AppMensajeria.Views
         private async void ItemEscuchar_Clicked(object sender, EventArgs e)
         {
             var menuItem = sender as ListView;
-            var mensaje = menuItem.SelectedItem as Mensaje;
-            await TextToSpeech.SpeakAsync(mensaje.Contenido);
+            var mensaje = menuItem.SelectedItem as MensajeImagen;
+            if(mensaje.Contenido == null || mensaje.Contenido == "")
+            {
+                await TextToSpeech.SpeakAsync("Este mensaje no tiene texto");
+            }
+            else
+            {
+                await TextToSpeech.SpeakAsync(mensaje.Contenido);
+            }
+       
         }
  
         public async Task llenarListaMensajes()

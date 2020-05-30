@@ -14,7 +14,7 @@ namespace AppMensajeria.Services
     public class MensajeService
     {
         private readonly AppDbContext _context;
-        private const string MensajeAPI = "https://grupo5.azurewebsites.net/api/Mensajes";
+        private const string MensajeAPI = "https://appmensajeria.azurewebsites.net/api/Mensajes";
 
         public MensajeService()
         {

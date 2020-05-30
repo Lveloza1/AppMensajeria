@@ -31,8 +31,10 @@ namespace AppMensajeria.Views
                 ButtonSelectPic.IsVisible = true;
                 EntryNombre.IsEnabled = true;
                 EntryTelefono.IsEnabled = true;
+                EntryBiografia.IsEnabled = true;
                 EntryNombre.Text = "";
                 EntryTelefono.Text = "";
+                EntryBiografia.Text = "";
                 ButtonRegistrar.IsVisible = true;
                 ButtonCerrarSesion.IsVisible = false;
             }
@@ -43,8 +45,10 @@ namespace AppMensajeria.Views
                 ButtonSelectPic.IsVisible = false;
                 EntryNombre.IsEnabled = false;
                 EntryTelefono.IsEnabled = false;
+                EntryBiografia.IsEnabled = false;
                 EntryNombre.Text = this_usuario.MiNombre;
                 EntryTelefono.Text = this_usuario.MiTelefono;
+                EntryBiografia.Text = this_usuario.MiBiografia;
                 ButtonRegistrar.IsVisible = false;
                 ButtonCerrarSesion.IsVisible = true;
 
@@ -87,26 +91,29 @@ namespace AppMensajeria.Views
             {
                 try
                 {
+                    var num = int.Parse(EntryTelefono.Text);
                     Usuario usuario = new Usuario
                     {
                         Imagen = ImageToBase64(file),
                         Nombre = EntryNombre.Text,
                         Telefono = EntryTelefono.Text,
+                        Biografia = EntryBiografia.Text
                     };
                     UsuarioService service = new UsuarioService();
 
                     var current = Connectivity.NetworkAccess;
 
-                    if (current == NetworkAccess.Internet) 
+                    if (current == NetworkAccess.Internet)
                     {
 
                         usuario = await service.CrearUsuarioApi(usuario);
                         PerfilService perfilService = new PerfilService();
                         perfilService.CrearPerfil(usuario);
-                        await DisplayAlert("Exito", "Su perfil ha sido almacenado.", "Aceptar");                        
+                        await DisplayAlert("Exito", "Su perfil ha sido almacenado.", "Aceptar");
                         ButtonSelectPic.IsVisible = false;
                         EntryNombre.IsEnabled = false;
                         EntryTelefono.IsEnabled = false;
+                        EntryBiografia.IsEnabled = false;
                         ButtonRegistrar.IsVisible = false;
                         formBuscarUsuario.IsVisible = false;
                         ButtonCerrarSesion.IsVisible = true;
@@ -116,7 +123,7 @@ namespace AppMensajeria.Views
                         await DisplayAlert("Error de conexión", "Debe estar conectado para registrarse", "Aceptar");
 
                     }
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -147,16 +154,17 @@ namespace AppMensajeria.Views
                             PerfilService perfilService = new PerfilService();
                             perfilService.CrearPerfil(await service.ObtenerUsuarioTelefonoApi(telefono));
                             EntryNombre.Text = this_usuario.Nombre;
-                            EntryTelefono.Text = (this_usuario.Telefono).ToString();
+                            EntryTelefono.Text = this_usuario.Telefono;
+                            EntryBiografia.Text = this_usuario.Biografia;
                             ImageView.Source = Base64ToImage(this_usuario.Imagen);
 
                             EntryNombre.IsEnabled = false;
                             EntryTelefono.IsEnabled = false;
+                            EntryBiografia.IsEnabled = false;
                             ButtonSelectPic.IsVisible = false;
                             formBuscarUsuario.IsVisible = false;
                             ButtonRegistrar.IsVisible = false;
                             ButtonCerrarSesion.IsVisible = true;
-
 
                         }
                         else

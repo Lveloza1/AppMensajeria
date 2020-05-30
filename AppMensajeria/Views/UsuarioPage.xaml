@@ -38,7 +38,13 @@
                    Placeholder="Nombre" />
             <Label Text="Telefono" />
             <Entry x:Name="EntryTelefono"
-                   Placeholder="Teléfono" />
+                   Placeholder="Teléfono" 
+                   MaxLength="10"/>
+            <Label Text="Biografía" />
+            <Editor x:Name="EntryBiografia"
+                    MaxLength="255"
+                    AutoSize="TextChanges"
+                    Placeholder="... Escribe algo sobre ti" />
             <Button x:Name="ButtonRegistrar"
                     Text="Registrarme"
                     Clicked="ButtonRegistrar_Clicked"/>

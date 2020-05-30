@@ -29,16 +29,24 @@
                                 <Grid VerticalOptions="CenterAndExpand">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
-                                    <Label FontAttributes="Bold"
-                                           Text="{Binding Nombre}"/>
-                                    <Label Grid.Row="1"
-                                           TextColor="Black"
-                                           Text="{Binding Telefono}" />
-                                    <Image Grid.Row="2"                                          
-                                           Source ="{Binding Imagen}" />
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source ="{Binding Imagen}" />
+                                        <StackLayout Grid.Column="1">
+                                            <Label FontAttributes="Bold"
+                                                   Grid.Column="1"
+                                                   Text="{Binding Nombre}"/>
+                                            <Label Text="Teléfono:"/>
+                                            <Label TextColor="Black"                                                  
+                                                   Text="{Binding Telefono}" />
+                                            <Label Text="Biografía:"/>
+                                            <Label TextColor="Black"                                                  
+                                                   Text="{Binding Biografia}" />
+                                        </StackLayout>
+                                    
                                     </Grid>
                             </StackLayout>
                         </Frame>

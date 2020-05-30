@@ -10,5 +10,6 @@ namespace AppMensajeria.Models
         {
 
         }
+        public string Biografia { get; set; }
     }
 }

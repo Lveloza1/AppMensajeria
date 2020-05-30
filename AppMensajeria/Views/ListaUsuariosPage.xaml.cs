@@ -32,7 +32,8 @@ namespace AppMensajeria.Views
                 {
                     Nombre = x.Nombre,
                     Telefono = x.Telefono,
-                    Imagen = Base64ToImage(x.Imagen)
+                    Imagen = Base64ToImage(x.Imagen),
+                    Biografia = x.Biografia
                 };
                 usuarioImagens.Add(usuario);
             }

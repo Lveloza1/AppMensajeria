@@ -14,7 +14,7 @@ namespace AppMensajeria.Services
     public class UsuarioService
     {
         private readonly AppDbContext _context;
-        private const string UsuarioAPI = "https://grupo5.azurewebsites.net/api/Usuarios";
+        private const string UsuarioAPI = "https://appmensajeria.azurewebsites.net/api/Usuarios";
 
         public UsuarioService()
         {

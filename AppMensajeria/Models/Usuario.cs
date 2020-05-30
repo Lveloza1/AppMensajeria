@@ -19,5 +19,8 @@ namespace AppMensajeria.Models
         [Required]
         [Column("Telefono")]
         public string Telefono { get; set; }
+        [Column("Biografia")]
+        [StringLength(255)]
+        public string Biografia { get; set; }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using AppMensajeria.Contexts;
 using AppMensajeria.Models;
 using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace AppMensajeria.Services
@@ -27,7 +26,8 @@ namespace AppMensajeria.Services
                     MiUsuarioID = usuario.UsuarioID,
                     MiImagen = usuario.Imagen,
                     MiNombre = usuario.Nombre,
-                    MiTelefono = usuario.Telefono
+                    MiTelefono = usuario.Telefono,
+                    MiBiografia = usuario.Biografia
                 };
                 _context.Perfiles.Add(perfil);
                 _context.SaveChanges();
