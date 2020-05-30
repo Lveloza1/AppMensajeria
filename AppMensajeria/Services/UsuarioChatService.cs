@@ -14,7 +14,7 @@ namespace AppMensajeria.Services
     public class UsuarioChatService
     {
         private readonly AppDbContext _context;
-        private const string UsuarioChatAPI = "https://appmensajeria.azurewebsites.net/api/UsuarioChats";
+        private const string UsuarioChatAPI = "https://grupo5.azurewebsites.net/api/UsuarioChats";
 
         public UsuarioChatService()
         {

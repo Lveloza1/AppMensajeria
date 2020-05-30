@@ -10,6 +10,7 @@ using Xamarin.Essentials;
 using System.Threading.Tasks;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace AppMensajeria.Views
 {
@@ -37,7 +38,7 @@ namespace AppMensajeria.Views
             UsuarioChats = await service.ObtenerChatDelUsuarioApi(this_usuario.MiUsuarioID);
             PickerChats.ItemsSource = UsuarioChats;
             ButtonCompartir.IsEnabled = false;
-            RefrescarMensajes();
+            //RefrescarMensajes();
 
         }
 
@@ -65,9 +66,9 @@ namespace AppMensajeria.Views
         private async void EnviarMensaje_Clicked(object sender, EventArgs e)
         {
 
-            if (EntryMensaje.Text == null)
+            if (EntryMensaje.Text == null && file == null)
             {
-                await DisplayAlert("Error", "El mensaje no tiene contenido", "Aceptar");
+                await DisplayAlert("Error", "El mensaje no tiene contenido, Escriba un mensaje o agregue una imagen", "Aceptar");
             }
             else
             {
@@ -90,7 +91,7 @@ namespace AppMensajeria.Views
                         UsuarioService service = new UsuarioService();
 
                         await mensajeService.EnviarMensajeApi(mensaje);
-                        //await llenarListaUsuario();
+                        await llenarListaMensajes();
 
                         EntryMensaje.Text= "";
 
@@ -109,9 +110,7 @@ namespace AppMensajeria.Views
             var picker = sender as Picker;
             if (picker.SelectedIndex >= 0)
             {
-                var chat = UsuarioChats[picker.SelectedIndex];
-                var mensajes = await mensajeService.ObtenerMensajesDelChatApi(chat.ChatID);
-                ListMensajes.ItemsSource = mensajes.ToObservableCollection();
+                llenarListaMensajes();
                 ButtonCompartir.IsEnabled = true;
             }
             else
@@ -129,11 +128,29 @@ namespace AppMensajeria.Views
             await TextToSpeech.SpeakAsync(mensaje.Contenido);
         }
  
-        public async Task llenarListaUsuario()
+        public async Task llenarListaMensajes()
         {
             var chat = UsuarioChats[PickerChats.SelectedIndex];
-            var mensajes = await mensajeService.ObtenerMensajesDelChatApi(chat.ChatID);       
-            ListMensajes.ItemsSource = mensajes.ToObservableCollection();
+            var mensajes = await mensajeService.ObtenerMensajesDelChatApi(chat.ChatID);
+            List<MensajeImagen> mensajeImagens = new List<MensajeImagen>();
+            foreach (var x in mensajes.ToList())
+            {
+                MensajeImagen m = new MensajeImagen
+                {
+                    MensajeID = x.MensajeID,
+                    UsuarioChatID = x.UsuarioChatID,
+                    UsuarioChat = x.UsuarioChat,
+                    Contenido = x.Contenido,
+                    Estado = x.Estado,
+                    Imagen = Base64ToImage(x.Imagen),
+                    InfoDate = x.InfoDate
+                };
+
+                mensajeImagens.Add(m);
+
+            }
+
+            ListMensajes.ItemsSource = mensajeImagens.ToObservableCollection();
         }
 
         public string ImageToBase64(MediaFile file)
@@ -176,27 +193,39 @@ namespace AppMensajeria.Views
 
         }
 
-        private async void RefrescarMensajes()
-        {
-            var Mensajes = await mensajeService.ObtenerMensajesDelUsuarioApi(this_usuario.MiUsuarioID);
-            var mensajestemp = new ObservableCollection<Mensaje>();
-            Task.Factory.StartNew(async() =>
-            {             
-                while (true)
-                {
-                    mensajestemp = await mensajeService.ObtenerMensajesDelUsuarioApi(this_usuario.MiUsuarioID);
-                    if (Mensajes.Count() < mensajestemp.Count())
-                    {
-                        MainThread.BeginInvokeOnMainThread(async () =>
-                        {
-                            await llenarListaUsuario();
-                        });
-                        Task.Delay(1000);
-                    }
-                }
-            });
+        //private async void RefrescarMensajes()
+        //{
+        //    var Mensajes = await mensajeService.ObtenerMensajesDelUsuarioApi(this_usuario.MiUsuarioID);
+        //    var mensajestemp = new ObservableCollection<Mensaje>();
+        //    Task.Factory.StartNew(async() =>
+        //    {             
+        //        while (true)
+        //        {
+        //            mensajestemp = await mensajeService.ObtenerMensajesDelUsuarioApi(this_usuario.MiUsuarioID);
+        //            if (Mensajes.Count() < mensajestemp.Count())
+        //            {
+        //                MainThread.BeginInvokeOnMainThread(async () =>
+        //                {
+        //                    try
+        //                    {
+        //                        var duration = TimeSpan.FromSeconds(1);
+        //                        Vibration.Vibrate(duration);                                
+        //                    }
+        //                    catch (Exception ex)
+        //                    {
+        //                        DisplayAlert("Error", "Ocurrio el siguiente error" + ex, "Aceptar");
+        //                    }
+        //                    await llenarListaUsuario();
 
-        }
+        //                });
+        //                Task.Delay(1000);
+        //                Vibration.Cancel();
+        //                Mensajes = await mensajeService.ObtenerMensajesDelUsuarioApi(this_usuario.MiUsuarioID);
+        //            }
+        //        }
+        //    });
+
+        //}
 
     }
 }
