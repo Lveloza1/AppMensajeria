@@ -1,5 +1,5 @@
 # AppMensajeria
-Este es un proyecto para la asignatura de Computación Móvil Avanzada. Es acerca de una app de mensajeria realizada en Xamarin que implementa algunos sensores de Xamarin Essenttials.
+Este es un proyecto para la asignatura de Computación Móvil Avanzada. Es acerca de una app de mensajeria realizada en Xamarin que implementa algunos sensores de Xamarin Essentials.
 
 # Equipo de trabajo
 Nefer Blanchar,
