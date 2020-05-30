@@ -2,10 +2,10 @@
 Este es un proyecto para la asignatura de Computación Móvil Avanzada. Es acerca de una app de mensajeria realizada en Xamarin que implementa algunos sensores de Xamarin Essenttials.
 
 # Equipo de trabajo
-Nefer Blanchar
-Dewis Eguis
-Jorge Palacio
-Luis Veloza
+Nefer Blanchar,
+Dewis Eguis,
+Jorge Palacio,
+Luis Veloza,
 
 # <- Documentación de la API ->
 ChatsController:
